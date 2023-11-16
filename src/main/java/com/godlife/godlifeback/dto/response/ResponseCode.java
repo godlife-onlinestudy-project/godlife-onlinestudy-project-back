@@ -13,6 +13,10 @@ public interface ResponseCode {
 
     String SIGN_IN_FAILED = "SF";
     String NOT_EXIST_USER = "NU";
+    String NOT_EXIST_STUDY = "NS";
+    String NOT_EXIST_STUDY_MATERIAL = "NM";
+    String NO_PERMISSION = "NP";
+
     String PASS_FAILED =  "CPE";
 
     String DATABASE_ERROR = "DBE";

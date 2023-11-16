@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
 
 import lombok.AllArgsConstructor;
@@ -48,5 +49,14 @@ public class StudyEntity {
         this.studyPrivatePassword = dto.getStudyPrivatePassword();
         this.studyCoverImageUrl = dto.getStudyCoverImageUrl();
         this.createStudyUserEmail = userEmail;
+    }
+
+    public void patch(PatchStudyRequestDto dto) {
+        this.studyName = dto.getStudyName();
+        this.studyEndDate = dto.getStudyEndDate();
+        this.studyPersonal = dto.getStudyPersonal();
+        this.studyCategory1 = dto.getStudyCategory1();
+        this.studyPublicCheck = dto.getStudyPublicCheck();
+        this.studyCoverImageUrl = dto.getStudyCoverImageUrl();
     }
 }
