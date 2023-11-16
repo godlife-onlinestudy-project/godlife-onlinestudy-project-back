@@ -10,6 +10,6 @@ import com.godlife.godlifeback.entity.UserToDoListEntity;
 @Repository
 public interface UserToDoListRepository extends JpaRepository<UserToDoListEntity, Integer> {
 
-  List<UserToDoListEntity> findByEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(String email, String userListDatetime);
+  List<UserToDoListEntity> findByUserEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(String userEmail, String userListDatetime);
   
 }

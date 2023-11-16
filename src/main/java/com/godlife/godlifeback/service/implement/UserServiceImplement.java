@@ -21,13 +21,13 @@ public class UserServiceImplement implements UserService {
   private final UserToDoListRepository userToDoListRepository;
 
   @Override
-  public ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(String email, String userListDatetime) {
+  public ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(String userEmail, String userListDatetime) {
 
     List<UserToDoListEntity> userToDoListEntities = new ArrayList<>();
 
     try {
 
-      userToDoListEntities = userToDoListRepository.findByEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(email, userListDatetime);
+      userToDoListEntities = userToDoListRepository.findByUserEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(userEmail, userListDatetime);
 
     } catch (Exception exception) {
       exception.printStackTrace();

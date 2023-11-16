@@ -14,18 +14,18 @@ import com.godlife.godlifeback.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/main")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class MainController {
 
   private final UserService userService;
 
-  @GetMapping("/user-todolist/{userListDatetime}")
+  @GetMapping("/main/user-todolist/{userListDatetime}")
   public ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(
     @PathVariable("userListDatetime") String userListDatetime,
-    @AuthenticationPrincipal String email
+    @AuthenticationPrincipal String userEmail
   ) {
-    ResponseEntity<? super GetUserToDoListResponseDto> response = userService.getUserToDoList(email, userListDatetime);
+    ResponseEntity<? super GetUserToDoListResponseDto> response = userService.getUserToDoList(userEmail, userListDatetime);
     return response;
   }
   

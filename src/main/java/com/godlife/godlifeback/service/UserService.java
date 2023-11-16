@@ -6,6 +6,6 @@ import com.godlife.godlifeback.dto.response.user.GetUserToDoListResponseDto;
 
 public interface UserService {
   
-  ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(String email, String userListDatetime);
+  ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(String userEmail, String userListDatetime);
 
 }
