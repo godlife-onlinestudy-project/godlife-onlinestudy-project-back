@@ -30,14 +30,14 @@ public class PostStudyRequestDto {
 
     private String studyCategory2;
 
+    private String studyCategory3;
+
     @NotNull
     private Boolean studyPublicCheck;
 
-    private String studyCategory3;
-
+    @Size(min=8)
     private String studyPrivatePassword;
 
     private String studyCoverImageUrl;
     
-    private String create_study_user_email;
 }
