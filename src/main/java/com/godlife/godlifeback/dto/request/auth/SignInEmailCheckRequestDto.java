@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EmailCheckRequestDto {
+public class SignInEmailCheckRequestDto {
 
     @NotBlank @Email @Pattern(regexp = "/^[a-zA-Z0-9_]*@([-.]?[a-zA-Z0-9])*\\.[a-zA-Z]{2,4}$/")
     private String userEmail;

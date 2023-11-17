@@ -13,8 +13,8 @@ import lombok.Setter;
 public class SignInRequestDto {
     
     @NotBlank@Pattern(regexp = "/^[a-zA-Z0-9_]*@([-.]?[a-zA-Z0-9])*\\.[a-zA-Z]{2,4}$/")
-    private String email;
+    private String userEmail;
     
     @NotBlank
-    private String password;
+    private String userPassword;
 }

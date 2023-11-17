@@ -2,6 +2,12 @@ package com.godlife.godlifeback.entity;
 import javax.persistence.Id;
 
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserFavorite1RequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserFavorite2RequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserFavorite3RequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserNicknameRequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserPasswordRequestDto;
+import com.godlife.godlifeback.dto.request.user.PatchUserProfileImageUrlRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +42,7 @@ public class UserEntity {
         this.userNickname = dto.getUserNickname();
     }
 
-    public void patchUserPassword(PatchUserNicknameRequestDto dto) {
+    public void patchUserPassword(PatchUserPasswordRequestDto dto) {
         this.userPassword = dto.getUserPassword();
     }
 
@@ -53,7 +59,7 @@ public class UserEntity {
     }
 
     public void patchUserProfileImageUrl(PatchUserProfileImageUrlRequestDto dto) {
-        this.userProfileImageUrl = dto.getUserNickname();
+        this.userProfileImageUrl = dto.getUserProfileImageUrl();
     }
 
 
