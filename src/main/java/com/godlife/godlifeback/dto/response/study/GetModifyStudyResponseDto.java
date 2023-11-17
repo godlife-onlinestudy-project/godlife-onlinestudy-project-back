@@ -20,6 +20,7 @@ public class GetModifyStudyResponseDto extends ResponseDto {
     private boolean studyPublicCheck;
     private String studyPrivatePassword;
     private String studyCoverImageUrl;
+    private String createStudyUserEmail;
 
     private GetModifyStudyResponseDto(String code, String message, StudyEntity studyEntity) {
         super(code, message);
@@ -32,6 +33,7 @@ public class GetModifyStudyResponseDto extends ResponseDto {
         this.studyPublicCheck = isStudyPublicCheck();
         this.studyPrivatePassword = studyEntity.getStudyPrivatePassword();
         this.studyCoverImageUrl = studyEntity.getStudyCoverImageUrl();
+        this.createStudyUserEmail = studyEntity.getCreateStudyUserEmail();
     }
 
     public static ResponseEntity<GetModifyStudyResponseDto> success(StudyEntity studyEntity) {
