@@ -30,7 +30,7 @@ public class GetModifyStudyResponseDto extends ResponseDto {
         this.studyEndDate = studyEntity.getStudyEndDate();
         this.studyPersonal = studyEntity.getStudyPersonal();
         this.studyCategory1 = studyEntity.getStudyCategory1();
-        this.studyPublicCheck = isStudyPublicCheck();
+        this.studyPublicCheck = studyEntity.isStudyPublicCheck();
         this.studyPrivatePassword = studyEntity.getStudyPrivatePassword();
         this.studyCoverImageUrl = studyEntity.getStudyCoverImageUrl();
         this.createStudyUserEmail = studyEntity.getCreateStudyUserEmail();
