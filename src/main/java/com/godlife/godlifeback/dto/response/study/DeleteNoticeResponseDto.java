@@ -10,20 +10,22 @@ import com.godlife.godlifeback.dto.response.ResponseMessage;
 import lombok.Getter;
 
 @Getter
-public class PatchNoticeResponseDto extends ResponseDto{
+public class DeleteNoticeResponseDto extends ResponseDto{
     
-    private PatchNoticeResponseDto(String code, String message){
+    private DeleteNoticeResponseDto(String code, String message){
         super(code, message);
     }
 
-    public static ResponseEntity<PatchNoticeResponseDto> success(){
-        PatchNoticeResponseDto result = new PatchNoticeResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    public static ResponseEntity<DeleteNoticeResponseDto> success(){
+        DeleteNoticeResponseDto result = new DeleteNoticeResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }        
+    }
 
     public static ResponseEntity<ResponseDto> notExistNotice(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_NOTICE_EXISTS, ResponseMessage.NOT_NOTICE_EXISTS);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
+
+    
     
 }
