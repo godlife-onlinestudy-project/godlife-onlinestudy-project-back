@@ -57,6 +57,7 @@ public class StudyEntity {
         this.studyPersonal = dto.getStudyPersonal();
         this.studyCategory1 = dto.getStudyCategory1();
         this.studyPublicCheck = dto.getStudyPublicCheck();
+        this.studyPrivatePassword = dto.getStudyPrivatePassword();
         this.studyCoverImageUrl = dto.getStudyCoverImageUrl();
     }
 }
