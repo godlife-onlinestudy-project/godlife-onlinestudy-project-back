@@ -14,6 +14,7 @@ public interface ResponseCode {
 
     String SIGN_IN_FAILED = "SF";
     String NOT_EXIST_USER = "NU";
+    String NOT_EXIST_USER_TO_DO_LIST = "NUTDL";
     String NOT_EXIST_BOARD = "NB";
     String PASS_FAILED =  "CPE";
     String NO_PERMISSION = "NP";
