@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
 import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
+import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.PostStudyResponseDto;
 import com.godlife.godlifeback.service.StudyService;
@@ -34,6 +35,15 @@ public class StudyController {
         @AuthenticationPrincipal String userEmail
     ) {
         ResponseEntity<? super GetModifyStudyResponseDto> response = studyService.getModifyStudy(studyNumber, userEmail);
+        return response;
+    }
+
+    @GetMapping("/{studyNumber}/study-user-list")
+    public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(
+        @PathVariable("studyNumber") Integer studyNumber,
+        @AuthenticationPrincipal String userEmail
+    ) {
+        ResponseEntity<? super GetStudyUserListResponseDto> response = studyService.getStudyUserList(studyNumber, userEmail);
         return response;
     }
     

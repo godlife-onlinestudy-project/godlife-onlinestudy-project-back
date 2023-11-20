@@ -3,6 +3,7 @@ package com.godlife.godlifeback.common.object;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.godlife.godlifeback.entity.StudyUserListEntity;
 import com.godlife.godlifeback.repository.resultSet.StudyUserListResultSet;
 
 import lombok.Getter;
@@ -15,16 +16,16 @@ public class StudyUserListItem {
     private String userEmail;
     private String studyGrade;
 
-    public StudyUserListItem(StudyUserListResultSet resultSet) {
-        this.studyNumber = resultSet.getStudyNumber();
-        this.userEmail = resultSet.getUserEmail();
-        this.studyGrade = resultSet.getStudyGrade();
+    public StudyUserListItem(StudyUserListEntity studyUserListEntity) {
+        this.studyNumber = studyUserListEntity.getStudyNumber();
+        this.userEmail = studyUserListEntity.getUserEmail();
+        this.studyGrade = studyUserListEntity.getStudyGrade();
     }
 
-    public static List<StudyUserListItem> getList(List<StudyUserListResultSet> resultSets) {
+    public static List<StudyUserListItem> getList(List<StudyUserListEntity> studyUserListEntities) {
         List<StudyUserListItem> list = new ArrayList<>();
-        for (StudyUserListResultSet resultSet: resultSets) {
-            StudyUserListItem studyUserListItem = new StudyUserListItem(resultSet);
+        for (StudyUserListEntity userList: studyUserListEntities) {
+            StudyUserListItem studyUserListItem = new StudyUserListItem(userList);
             list.add(studyUserListItem);
         }
         return list;
