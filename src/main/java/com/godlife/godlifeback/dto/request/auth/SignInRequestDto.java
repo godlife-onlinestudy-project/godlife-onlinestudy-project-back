@@ -12,7 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SignInRequestDto {
     
-    @NotBlank@Pattern(regexp = "/^[a-zA-Z0-9_]*@([-.]?[a-zA-Z0-9])*\\.[a-zA-Z]{2,4}$/")
+    @NotBlank 
+    // @Pattern(regexp = "/^[a-zA-Z0-9_]*@([-.]?[a-zA-Z0-9])*\\.[a-zA-Z]{2,4}$/")
     private String userEmail;
     
     @NotBlank

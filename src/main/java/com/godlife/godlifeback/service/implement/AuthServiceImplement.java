@@ -33,7 +33,7 @@ public class AuthServiceImplement implements AuthService{
         try {
             String email = dto.getUserEmail();
 
-            boolean existedEmail = userRepository.existsByEmail(email);
+            boolean existedEmail = userRepository.existsByUserEmail(email);
             if (!existedEmail) return SignInResponseDto.signInFailed();
             
         } catch (Exception exception) {
@@ -52,7 +52,7 @@ public class AuthServiceImplement implements AuthService{
         try {
             String email = dto.getUserEmail();
 
-            UserEntity userEntity = userRepository.findByEmail(email);
+            UserEntity userEntity = userRepository.findByUserEmail(email);
             if (userEntity == null) return SignInResponseDto.signInFailed();
 
             String password = dto.getUserPassword();
@@ -78,7 +78,7 @@ public class AuthServiceImplement implements AuthService{
 
             String userEmail = dto.getUserEmail();
 
-            boolean hasEmail = userRepository.existsByEmail(userEmail);
+            boolean hasEmail = userRepository.existsByUserEmail(userEmail);
             if (hasEmail) return SignUpResponseDto.duplicateUserEmail();
 
 

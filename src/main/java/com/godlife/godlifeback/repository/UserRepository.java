@@ -5,13 +5,10 @@ import org.springframework.stereotype.Repository;
 import com.godlife.godlifeback.entity.UserEntity;
 
 @Repository
-public interface UserRepository  extends JpaRepository<UserEntity, String>{
-
+public interface UserRepository extends JpaRepository<UserEntity, String>{
         
-    boolean existsByEmail(String email);
+    boolean existsByUserEmail(String userEmail);
 
-    UserEntity findByEmail(String email);
-
-
+    UserEntity findByUserEmail(String userEmail);
     
 }

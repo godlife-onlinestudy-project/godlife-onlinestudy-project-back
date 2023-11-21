@@ -1,5 +1,7 @@
 package com.godlife.godlifeback.entity;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
 import com.godlife.godlifeback.dto.request.user.PatchUserFavorite1RequestDto;
@@ -16,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name="user")
+@Entity(name="user")
 public class UserEntity {
     
     @Id    
@@ -27,15 +30,13 @@ public class UserEntity {
     private String userFavorite2;
     private String userFavorite3;
     private String userProfileImageUrl;
-    private String userExp;
+    private String userExperience;
 
     public UserEntity(SignUpRequestDto dto) {
         this.userEmail = dto.getUserEmail();
         this.userPassword = dto.getUserPassword();
         this.userNickname = dto.getUserNickname();
         this.userFavorite1 = dto.getUserFavorite1();
-        this.userFavorite2 = dto.getUserFavorite2();
-        this.userFavorite3 = dto.getUserFavorite3();
     }
 
     public void patchUserNickname(PatchUserNicknameRequestDto dto) {
