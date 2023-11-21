@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
+import com.godlife.godlifeback.dto.response.study.DeleteStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
@@ -63,6 +65,15 @@ public class StudyController {
         @AuthenticationPrincipal String userEmail
     ) {
         ResponseEntity<? super PatchStudyResponseDto> response = studyService.patchStudy(requestBody, studyNumber, userEmail);
+        return response;
+    }
+
+    @DeleteMapping("/{studyNumber}/study-user-list")
+    public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(
+        @PathVariable("studyNumber") Integer studyNumber,
+        @AuthenticationPrincipal String userEmail
+    ) {
+        ResponseEntity<? super DeleteStudyUserListResponseDto> response = studyService.deleteStudyUserList(studyNumber, userEmail);
         return response;
     }
 

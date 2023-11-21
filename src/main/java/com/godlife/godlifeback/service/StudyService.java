@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
+import com.godlife.godlifeback.dto.response.study.DeleteStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
@@ -18,5 +19,7 @@ public interface StudyService {
     ResponseEntity<? super PostStudyResponseDto> postStudy(PostStudyRequestDto dto, String userEmail);
 
     ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber, String userEmail);
+
+    ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer StudyNumber, String userEmail);
 
 }

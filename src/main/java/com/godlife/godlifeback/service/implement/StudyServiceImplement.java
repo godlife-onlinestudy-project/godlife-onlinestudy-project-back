@@ -9,6 +9,7 @@ import java.util.List;
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
 import com.godlife.godlifeback.dto.response.ResponseDto;
+import com.godlife.godlifeback.dto.response.study.DeleteStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
@@ -110,6 +111,28 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return PatchStudyResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail) {
+
+        try {
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if (studyEntity == null) return DeleteStudyUserListResponseDto.notExistStudy();
+
+            boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(userEmail);
+            if (!isCreater) return DeleteStudyUserListResponseDto.noPermission();
+
+            studyUserListRepository.deleteByUserEmail(userEmail);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return DeleteStudyUserListResponseDto.success();
+
     }
     
     

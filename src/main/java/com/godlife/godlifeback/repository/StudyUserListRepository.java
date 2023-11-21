@@ -33,5 +33,5 @@ public interface StudyUserListRepository extends JpaRepository<StudyUserListEnti
     List<StudyUserListResultSet> findByStudyUserList(Integer studyNumber);
     
     @Transactional
-    void deleteByStudyNumber(Integer studyNumber);
+    void deleteByUserEmail(String userEmail);
 }
