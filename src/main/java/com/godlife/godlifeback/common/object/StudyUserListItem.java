@@ -3,7 +3,6 @@ package com.godlife.godlifeback.common.object;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.godlife.godlifeback.entity.StudyUserListEntity;
 import com.godlife.godlifeback.repository.resultSet.StudyUserListResultSet;
 
 import lombok.Getter;

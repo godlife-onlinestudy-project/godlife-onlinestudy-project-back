@@ -21,7 +21,7 @@ public class GetStudyUserListResponseDto extends ResponseDto {
 
     private GetStudyUserListResponseDto(String code, String message, List<StudyUserListResultSet> resultSets) {
         super(code, message);
-        this.studyUserList = StudyUserListItem.getList(resultSets);`
+        this.studyUserList = StudyUserListItem.getList(resultSets);
     }
 
     public static ResponseEntity<GetStudyUserListResponseDto> success(List<StudyUserListResultSet> resultSets) {

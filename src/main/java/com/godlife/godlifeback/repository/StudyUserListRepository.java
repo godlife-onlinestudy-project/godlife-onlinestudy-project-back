@@ -2,6 +2,8 @@ package com.godlife.godlifeback.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,7 @@ public interface StudyUserListRepository extends JpaRepository<StudyUserListEnti
         nativeQuery = true
     )
     List<StudyUserListResultSet> findByStudyUserList(Integer studyNumber);
-    // List<StudyUserListEntity> findByStudyNumber(Integer studyNumber);
     
+    @Transactional
+    void deleteByStudyNumber(Integer studyNumber);
 }
