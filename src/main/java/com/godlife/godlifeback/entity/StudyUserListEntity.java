@@ -25,11 +25,5 @@ public class StudyUserListEntity {
     @Id
     private String userEmail;
     private String studyGrade;
-    
-    public StudyUserListEntity (Integer studyNumber, String userEmail, String studyGrade) {
-        this.studyNumber = studyNumber;
-        this.userEmail = userEmail;
-        this.studyGrade = studyGrade;
-    }
 
 }

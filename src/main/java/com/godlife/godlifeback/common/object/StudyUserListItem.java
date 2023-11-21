@@ -12,20 +12,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudyUserListItem {
-    private int studyNumber;
-    private String userEmail;
+    private String nickname;
+    private String profileImageUrl;
     private String studyGrade;
 
-    public StudyUserListItem(StudyUserListEntity studyUserListEntity) {
-        this.studyNumber = studyUserListEntity.getStudyNumber();
-        this.userEmail = studyUserListEntity.getUserEmail();
-        this.studyGrade = studyUserListEntity.getStudyGrade();
+    public StudyUserListItem(StudyUserListResultSet resultSet) {
+        this.nickname = resultSet.getNickname();
+        this.profileImageUrl = resultSet.getProfileImageUrl();
+        this.studyGrade = resultSet.getStudyGrade();
     }
 
-    public static List<StudyUserListItem> getList(List<StudyUserListEntity> studyUserListEntities) {
+    public static List<StudyUserListItem> getList(List<StudyUserListResultSet> resultSets) {
         List<StudyUserListItem> list = new ArrayList<>();
-        for (StudyUserListEntity userList: studyUserListEntities) {
-            StudyUserListItem studyUserListItem = new StudyUserListItem(userList);
+        for (StudyUserListResultSet resultSet: resultSets) {
+            StudyUserListItem studyUserListItem = new StudyUserListItem(resultSet);
             list.add(studyUserListItem);
         }
         return list;

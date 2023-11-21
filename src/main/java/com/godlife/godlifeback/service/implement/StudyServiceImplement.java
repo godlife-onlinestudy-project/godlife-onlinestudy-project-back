@@ -17,6 +17,7 @@ import com.godlife.godlifeback.entity.StudyEntity;
 import com.godlife.godlifeback.entity.StudyUserListEntity;
 import com.godlife.godlifeback.repository.StudyRepository;
 import com.godlife.godlifeback.repository.StudyUserListRepository;
+import com.godlife.godlifeback.repository.resultSet.StudyUserListResultSet;
 import com.godlife.godlifeback.service.StudyService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,7 @@ public class StudyServiceImplement implements StudyService {
     @Override
     public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail) {
 
-        List<StudyUserListEntity> studyUserListEntities = new ArrayList<>();
+        List<StudyUserListResultSet> studyUserListResultSets = new ArrayList<>();
 
         try {
 
@@ -62,13 +63,13 @@ public class StudyServiceImplement implements StudyService {
             boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
             if(!existedUserList) return GetStudyUserListResponseDto.notExistUser();
 
-            studyUserListEntities = studyUserListRepository.findByStudyNumber(studyNumber);
+            studyUserListResultSets = studyUserListRepository.findByStudyUserList(studyNumber);
             
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetStudyUserListResponseDto.success(studyUserListEntities);
+        return GetStudyUserListResponseDto.success(studyUserListResultSets);
     }
 
     @Override

@@ -15,20 +15,20 @@ public interface StudyUserListRepository extends JpaRepository<StudyUserListEnti
 
     boolean existsByUserEmailAndStudyNumber(String userEmail, Integer StudyNumber);
     
-    // @Query(
-    //     value = 
-    //     "SELECT " +
-    //         "U.user_nickname AS nickname " +
-    //         "U.user_profile_image_url AS profileImageUrl " +
-    //         "S.study_grade AS studyGrade " +
-    //     "FROM study_user_list AS S " +
-    //     "INNTER JOIN user AS U " +
-    //     "ON S.user_email = U.user_email " +
-    //     "WHERE S.study_number = ?1 " +
-    //     "ORDER BY study_grade DESC ",
-    //     nativeQuery = true
-    // )
-    // List<StudyUserListResultSet> findByStudyUserList(Integer studyNumber);
-    List<StudyUserListEntity> findByStudyNumber(Integer studyNumber);
+    @Query(
+        value = 
+        "SELECT " +
+            "U.user_nickname AS nickname, " +
+            "U.user_profile_image_url AS profileImageUrl, " +
+            "S.study_grade AS studyGrade " +
+        "FROM study_user_list AS S " +
+        "INNER JOIN user AS U " +
+        "ON S.user_email = U.user_email " +
+        "WHERE S.study_number = ?1 " +
+        "ORDER BY S.study_grade DESC ",
+        nativeQuery = true
+    )
+    List<StudyUserListResultSet> findByStudyUserList(Integer studyNumber);
+    // List<StudyUserListEntity> findByStudyNumber(Integer studyNumber);
     
 }

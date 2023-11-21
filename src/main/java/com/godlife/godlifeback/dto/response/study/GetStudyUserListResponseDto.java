@@ -19,13 +19,13 @@ public class GetStudyUserListResponseDto extends ResponseDto {
     
     List<StudyUserListItem> studyUserList;
 
-    private GetStudyUserListResponseDto(String code, String message, List<StudyUserListEntity> studyUserListEntities) {
+    private GetStudyUserListResponseDto(String code, String message, List<StudyUserListResultSet> resultSets) {
         super(code, message);
-        this.studyUserList = StudyUserListItem.getList(studyUserListEntities);
+        this.studyUserList = StudyUserListItem.getList(resultSets);`
     }
 
-    public static ResponseEntity<GetStudyUserListResponseDto> success(List<StudyUserListEntity> studyUserListEntities) {
-        GetStudyUserListResponseDto result = new GetStudyUserListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, studyUserListEntities);
+    public static ResponseEntity<GetStudyUserListResponseDto> success(List<StudyUserListResultSet> resultSets) {
+        GetStudyUserListResponseDto result = new GetStudyUserListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, resultSets);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
