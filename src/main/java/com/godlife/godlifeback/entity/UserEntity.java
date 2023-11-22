@@ -30,14 +30,15 @@ public class UserEntity {
     private String userFavorite2;
     private String userFavorite3;
     private String userProfileImageUrl;
-    private String userExperience;
+    private Integer userExperience;
 
     public UserEntity(SignUpRequestDto dto) {
         this.userEmail = dto.getUserEmail();
         this.userPassword = dto.getUserPassword();
         this.userNickname = dto.getUserNickname();
         this.userFavorite1 = dto.getUserFavorite1();
-    }
+        this.userExperience = 0;
+    }   
 
     public void patchUserNickname(PatchUserNicknameRequestDto dto) {
         this.userNickname = dto.getUserNickname();

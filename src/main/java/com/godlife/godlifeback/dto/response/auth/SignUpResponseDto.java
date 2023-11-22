@@ -35,7 +35,7 @@ public class SignUpResponseDto extends ResponseDto{
     }
 
     public static ResponseEntity<ResponseDto> duplicateUserFavorite1() {
-        ResponseDto result = new ResponseDto(ResponseCode.DUPLICATED_NICKNAME, ResponseMessage.DUPLICATED_NICKNAME);
+        ResponseDto result = new ResponseDto(ResponseCode.DUPLICATED_FAVORITE1, ResponseMessage.DUPLICATED_FAVORITE1);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 }

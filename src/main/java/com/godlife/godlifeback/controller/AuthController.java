@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
+import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignUpResponseDto;
 import com.godlife.godlifeback.service.AuthService;
@@ -22,6 +24,14 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthService authService;
+
+    @PostMapping("/sign-in-email-check")
+    public ResponseEntity<? super SignInEmailcheckResponseDto> signInEmailCheck(
+        @RequestBody @Valid SignInEmailCheckRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignInEmailcheckResponseDto> response = authService.signInEmailCheck(requestBody);
+        return response;
+    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<? super SignUpResponseDto> signUp(

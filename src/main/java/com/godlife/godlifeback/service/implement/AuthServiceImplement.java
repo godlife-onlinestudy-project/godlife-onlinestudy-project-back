@@ -31,10 +31,10 @@ public class AuthServiceImplement implements AuthService{
     @Override
     public ResponseEntity<? super SignInEmailcheckResponseDto> signInEmailCheck(SignInEmailCheckRequestDto dto) {
         try {
-            String email = dto.getUserEmail();
+            String userEmail = dto.getUserEmail();
 
-            boolean existedEmail = userRepository.existsByUserEmail(email);
-            if (!existedEmail) return SignInResponseDto.signInFailed();
+            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+            if (userEntity == null) return SignInEmailcheckResponseDto.notExistUser();
             
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -50,18 +50,18 @@ public class AuthServiceImplement implements AuthService{
         String token = null;
 
         try {
-            String email = dto.getUserEmail();
+            String userEmail = dto.getUserEmail();
 
-            UserEntity userEntity = userRepository.findByUserEmail(email);
+            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
             if (userEntity == null) return SignInResponseDto.signInFailed();
 
-            String password = dto.getUserPassword();
-            String encodedPassword = userEntity.getUserPassword();
+            String userPassword = dto.getUserPassword();
+            String encodedUserPassword = userEntity.getUserPassword();
 
-            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            boolean isMatched = passwordEncoder.matches(userPassword, encodedUserPassword);
             if (!isMatched) return SignInResponseDto.signInFailed();
 
-            token = jwtProvider.create(email);
+            token = jwtProvider.create(userEmail);
 
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -82,10 +82,10 @@ public class AuthServiceImplement implements AuthService{
             if (hasEmail) return SignUpResponseDto.duplicateUserEmail();
 
 
-            String password = dto.getUserPassword();
-            String encodedPassword = passwordEncoder.encode(password);
+            String userPassword = dto.getUserPassword();
+            String encodedUserPassword = passwordEncoder.encode(userPassword);
 
-            dto.setUserPassword(encodedPassword);
+            dto.setUserPassword(encodedUserPassword);
 
             UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);

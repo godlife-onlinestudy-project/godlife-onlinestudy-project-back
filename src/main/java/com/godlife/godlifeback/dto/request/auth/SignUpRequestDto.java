@@ -15,10 +15,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SignUpRequestDto {
 
-    @NotBlank @Email @Pattern(regexp = "/^[a-zA-Z0-9_]*@([-.]?[a-zA-Z0-9])*\\.[a-zA-Z]{2,4}$/")
+    @NotBlank @Email
     private String userEmail;
 
-    @NotBlank @Size(min=8, max=20) @Pattern(regexp= "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_?]).{8,15}$/")
+    @NotBlank @Size(min=8, max=20) @Pattern(regexp="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_?]).{8,15}")
     private String userPassword;
 
     @NotBlank @Size(min=1, max=20)

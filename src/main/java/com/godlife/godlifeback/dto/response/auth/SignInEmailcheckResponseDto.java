@@ -13,9 +13,9 @@ public class SignInEmailcheckResponseDto extends ResponseDto {
         super(code, message);
     }
 
-        public static ResponseEntity<SignInEmailcheckResponseDto> success() {
-        SignInEmailcheckResponseDto result = new SignInEmailcheckResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+    public static ResponseEntity<SignInEmailcheckResponseDto> success() {
+    SignInEmailcheckResponseDto result = new SignInEmailcheckResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     public static ResponseEntity<ResponseDto> notExistUser() {
