@@ -12,6 +12,7 @@ import com.godlife.godlifeback.dto.response.ResponseDto;
 import com.godlife.godlifeback.dto.response.user.GetUserToDoListResponseDto;
 import com.godlife.godlifeback.dto.response.user.PatchUserToDoListResponseDto;
 import com.godlife.godlifeback.dto.response.user.PostUserToDoListResponseDto;
+import com.godlife.godlifeback.dto.response.user.DeleteUserToDoListResponseDto;
 import com.godlife.godlifeback.entity.UserToDoListEntity;
 import com.godlife.godlifeback.repository.UserToDoListRepository;
 import com.godlife.godlifeback.repository.UserToDoListViewRepository;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImplement implements UserService {
-  
+
   private final UserToDoListViewRepository userToDoListViewRepository;
   private final UserToDoListRepository userToDoListRepository;
 
@@ -33,7 +34,8 @@ public class UserServiceImplement implements UserService {
 
     try {
 
-      userToDoListEntities = userToDoListViewRepository.findByUserEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(userEmail, userListDatetime);
+      userToDoListEntities = userToDoListViewRepository
+          .findByUserEmailContainsAndUserListDatetimeContainsOrderByUserListNumber(userEmail, userListDatetime);
 
     } catch (Exception exception) {
       exception.printStackTrace();
@@ -42,22 +44,25 @@ public class UserServiceImplement implements UserService {
 
     return GetUserToDoListResponseDto.success(userToDoListEntities);
   }
-  
+
   @Override
-  public ResponseEntity<? super PatchUserToDoListResponseDto> patchUserToDoList(PatchUserToDoListRequestDto dto, Integer userListNumber, String userEmail, String userListDatetime) {
-    
+  public ResponseEntity<? super PatchUserToDoListResponseDto> patchUserToDoList(PatchUserToDoListRequestDto dto,
+      Integer userListNumber, String userEmail, String userListDatetime) {
+
     try {
 
       boolean existedUser = userToDoListRepository.existsByUserEmail(userEmail);
-      if (!existedUser) return PatchUserToDoListResponseDto.notExistUser();
+      if (!existedUser)
+        return PatchUserToDoListResponseDto.notExistUser();
 
       UserToDoListEntity userToDoListEntity = userToDoListRepository.findByUserListNumber(userListNumber);
-      if (userToDoListEntity == null) return PatchUserToDoListResponseDto.notExistUserToDoList();
+      if (userToDoListEntity == null)
+        return PatchUserToDoListResponseDto.notExistUserToDoList();
 
       userToDoListEntity.patch(dto);
       userToDoListRepository.save(userToDoListEntity);
 
-    } catch(Exception exception) {
+    } catch (Exception exception) {
       exception.printStackTrace();
       return ResponseDto.databaseError();
     }
@@ -67,11 +72,13 @@ public class UserServiceImplement implements UserService {
   }
 
   @Override
-  public ResponseEntity<? super PostUserToDoListResponseDto> postUserToDoList(PostUserToDoListRequestDto dto, String userEmail) {
+  public ResponseEntity<? super PostUserToDoListResponseDto> postUserToDoList(PostUserToDoListRequestDto dto,
+      String userEmail) {
     try {
 
       boolean existedUser = userToDoListRepository.existsByUserEmail(userEmail);
-      if (!existedUser) return PostUserToDoListResponseDto.notExistUser();
+      if (!existedUser)
+        return PostUserToDoListResponseDto.notExistUser();
 
       UserToDoListEntity userToDoListEntity = new UserToDoListEntity(dto, userEmail);
       userToDoListRepository.save(userToDoListEntity);
@@ -83,6 +90,29 @@ public class UserServiceImplement implements UserService {
 
     return PostUserToDoListResponseDto.success();
 
+  }
+
+  @Override
+  public ResponseEntity<? super DeleteUserToDoListResponseDto> deleteUserToDoList(List<Integer> userListNumber,
+      String userEmail) {
+    try {
+
+      boolean existedUser = userToDoListRepository.existsByUserEmail(userEmail);
+      if (!existedUser)
+        return DeleteUserToDoListResponseDto.notExistUser();
+
+      List<UserToDoListEntity> userToDoListEntity = userToDoListRepository.findByUserListNumberIn(userListNumber);
+      if (userToDoListEntity == null)
+        return DeleteUserToDoListResponseDto.notExistUserToDoList();
+
+      userToDoListRepository.deleteAllInBatch(userToDoListEntity);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return DeleteUserToDoListResponseDto.success();
   }
 
 }
