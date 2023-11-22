@@ -29,4 +29,5 @@ public interface ResponseMessage {
     String CANT_STUDY_DATE_MODIFY = "The next study date cannot be set to earlier than today.";
     String PASS_FAILED = "Confirm Password error.";
     String NO_PERMISSION = "Do not have permission.";
-    String DATABASE_ERROR = "DataBase error."
+    String DATABASE_ERROR = "DataBase error.";
+}
