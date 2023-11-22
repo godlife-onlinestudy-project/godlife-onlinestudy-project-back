@@ -68,12 +68,13 @@ public class StudyController {
         return response;
     }
 
-    @DeleteMapping("/{studyNumber}/study-user-list")
+    @DeleteMapping("/{studyNumber}/{userEmail}/study-user-list")
     public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(
         @PathVariable("studyNumber") Integer studyNumber,
-        @AuthenticationPrincipal String userEmail
+        @PathVariable("userEmail") String userEmail,            // 특정 유저를 알아야하니 추가
+        @AuthenticationPrincipal String createStudyUserEmail    // 방장이 권한을 가져서 특정 유저를 Delete 하니까 이렇게 받아옴
     ) {
-        ResponseEntity<? super DeleteStudyUserListResponseDto> response = studyService.deleteStudyUserList(studyNumber, userEmail);
+        ResponseEntity<? super DeleteStudyUserListResponseDto> response = studyService.deleteStudyUserList(studyNumber, userEmail, createStudyUserEmail);
         return response;
     }
 

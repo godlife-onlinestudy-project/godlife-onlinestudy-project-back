@@ -11,13 +11,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudyUserListItem {
-    private String nickname;
-    private String profileImageUrl;
+    private String userEmail;
+    private String userNickname;
+    private String userProfileImageUrl;
     private String studyGrade;
 
     public StudyUserListItem(StudyUserListResultSet resultSet) {
-        this.nickname = resultSet.getNickname();
-        this.profileImageUrl = resultSet.getProfileImageUrl();
+        this.userEmail = resultSet.getEmail();      // 해당방의 특정 유저를 받아와야 하기에 추가
+        this.userNickname = resultSet.getNickname();
+        this.userProfileImageUrl = resultSet.getProfileImageUrl();
         this.studyGrade = resultSet.getStudyGrade();
     }
 

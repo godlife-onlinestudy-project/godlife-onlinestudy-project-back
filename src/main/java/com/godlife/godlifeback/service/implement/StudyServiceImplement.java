@@ -61,6 +61,8 @@ public class StudyServiceImplement implements StudyService {
             boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
             if(!existedStudy) return GetStudyUserListResponseDto.notExistStudy();
 
+            System.out.println(userEmail);
+
             boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
             if(!existedUserList) return GetStudyUserListResponseDto.notExistUser();
 
@@ -114,17 +116,20 @@ public class StudyServiceImplement implements StudyService {
     }
 
     @Override
-    public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail) {
+    public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail, String createStudyUserEmail) {
 
         try {
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
             if (studyEntity == null) return DeleteStudyUserListResponseDto.notExistStudy();
 
-            boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(userEmail);
+            boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
             if (!isCreater) return DeleteStudyUserListResponseDto.noPermission();
 
-            studyUserListRepository.deleteByUserEmail(userEmail);
+            StudyUserListEntity studyUserListEntity = studyUserListRepository.findByStudyNumberAndUserEmail(studyNumber, userEmail);
+            if (studyUserListEntity == null) return DeleteStudyUserListResponseDto.notExistUser();
+
+            studyUserListRepository.delete(studyUserListEntity);
             
         } catch (Exception exception) {
             exception.printStackTrace();

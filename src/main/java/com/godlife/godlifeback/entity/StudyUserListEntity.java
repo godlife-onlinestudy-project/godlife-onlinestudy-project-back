@@ -25,5 +25,4 @@ public class StudyUserListEntity {
     @Id
     private String userEmail;
     private String studyGrade;
-
 }

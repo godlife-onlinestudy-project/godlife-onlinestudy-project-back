@@ -20,6 +20,6 @@ public interface StudyService {
 
     ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber, String userEmail);
 
-    ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer StudyNumber, String userEmail);
+    ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail, String createStudyUserEmail);
 
 }
