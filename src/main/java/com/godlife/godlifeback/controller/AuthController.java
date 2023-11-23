@@ -8,22 +8,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.godlife.godlifeback.dto.request.auth.SendAuthenticateCodeRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
 import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignUpResponseDto;
+import com.godlife.godlifeback.provider.MailProvider;
 import com.godlife.godlifeback.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
+    private final MailProvider mailProvider;
 
     @PostMapping("/sign-in-email-check")
     public ResponseEntity<? super SignInEmailcheckResponseDto> signInEmailCheck(
@@ -47,6 +50,15 @@ public class AuthController {
     ) {
         ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
         return response;
+    }
+
+    @PostMapping("/send-authenticate-code")
+    public String sendAuthenticateCode(
+        @RequestBody @Valid SendAuthenticateCodeRequestDto requestBody
+    ) {
+        String email = requestBody.getEmail();
+        mailProvider.sendMail(email, "ASDJQFIZSXCVJQASWDIAOSDA");
+        return "send";
     }
     
 }
