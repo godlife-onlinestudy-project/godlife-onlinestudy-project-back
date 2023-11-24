@@ -5,15 +5,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.godlife.godlifeback.dto.request.auth.SendAuthenticateCodeRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
 import com.godlife.godlifeback.dto.response.ResponseDto;
+import com.godlife.godlifeback.dto.response.auth.SendAuthenticateCodeResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignUpResponseDto;
+import com.godlife.godlifeback.entity.EmailCodeEntity;
 import com.godlife.godlifeback.entity.UserEntity;
 import com.godlife.godlifeback.provider.JwtProvider;
+import com.godlife.godlifeback.provider.MailProvider;
+import com.godlife.godlifeback.repository.EmailCodeRepository;
 import com.godlife.godlifeback.repository.UserRepository;
 import com.godlife.godlifeback.service.AuthService;
 
@@ -24,7 +29,9 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImplement implements AuthService{
     
     private final UserRepository userRepository;
+    private final EmailCodeRepository emailCodeRepository;
     private final JwtProvider jwtProvider;
+    private final MailProvider mailProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -98,5 +105,25 @@ public class AuthServiceImplement implements AuthService{
         return SignUpResponseDto.success();
     }
 
+    
+    @Override
+    public ResponseEntity<? super SendAuthenticateCodeResponseDto> sendAuthenticateCode(SendAuthenticateCodeRequestDto dto) {
+        
+        try {
+            int code = (int)(Math.random() * (90000)) + 100000;
+            String email = dto.getUserEmail();
+
+            mailProvider.createMail(email, code);
+
+            EmailCodeEntity emailCodeEntity = new EmailCodeEntity(email, code);
+            emailCodeRepository.save(emailCodeEntity);
+            
+        } catch (Exception exception) {
+
+        }
+
+        return SendAuthenticateCodeResponseDto.success();
+
+    }
 
 }

@@ -1,12 +1,13 @@
 package com.godlife.godlifeback.provider;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.ArrayList;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MailProvider {
 
     private final JavaMailSender javaMailSender;
+    private static final String senderEmail= "gohwangbong@gmail.com";
 
     public void sendMail(String email, String code) {
         
@@ -33,5 +35,28 @@ public class MailProvider {
         
         // 메일 발송
         javaMailSender.send(simpleMessage);
+ 
     }   
+
+    public void createMail(String email, int number){
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        try {
+            message.setFrom(senderEmail);
+            message.setRecipients(MimeMessage.RecipientType.TO, email);
+            message.setSubject("이메일 인증");
+            String body = "";
+            body += "<h3>" + "요청하신 인증 번호입니다." + "</h3>";
+            body += "<h1>" + number + "</h1>";
+            body += "<h3>" + "감사합니다." + "</h3>";
+            message.setText(body,"UTF-8", "html");
+
+        } catch (MessagingException exception) {
+            exception.printStackTrace();
+        }
+
+        javaMailSender.send(message);
+    }
+
 }

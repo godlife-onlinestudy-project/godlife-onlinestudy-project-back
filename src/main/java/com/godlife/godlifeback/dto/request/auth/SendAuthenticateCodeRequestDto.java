@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SendAuthenticateCodeRequestDto {
-    private String email;
+    private String userEmail;
 }

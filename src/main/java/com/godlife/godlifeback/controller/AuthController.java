@@ -12,6 +12,7 @@ import com.godlife.godlifeback.dto.request.auth.SendAuthenticateCodeRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
+import com.godlife.godlifeback.dto.response.auth.SendAuthenticateCodeResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignUpResponseDto;
@@ -53,12 +54,11 @@ public class AuthController {
     }
 
     @PostMapping("/send-authenticate-code")
-    public String sendAuthenticateCode(
+    public ResponseEntity<? super SendAuthenticateCodeResponseDto> sendAuthenticateCode(
         @RequestBody @Valid SendAuthenticateCodeRequestDto requestBody
     ) {
-        String email = requestBody.getEmail();
-        mailProvider.sendMail(email, "ASDJQFIZSXCVJQASWDIAOSDA");
-        return "send";
+        ResponseEntity<? super SendAuthenticateCodeResponseDto> response = authService.sendAuthenticateCode(requestBody);
+        return response;
     }
     
 }
