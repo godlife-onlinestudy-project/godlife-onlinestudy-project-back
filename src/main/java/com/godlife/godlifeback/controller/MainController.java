@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,13 +26,13 @@ import com.godlife.godlifeback.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/main")
 @RequiredArgsConstructor
 public class MainController {
 
   private final UserService userService;
 
-  @GetMapping("/main/user-todolist/{userListDatetime}")
+  @GetMapping("/user-todolist/{userListDatetime}")
   public ResponseEntity<? super GetUserToDoListResponseDto> getUserToDoList(
       @PathVariable("userListDatetime") String userListDatetime,
       @AuthenticationPrincipal String userEmail) {
@@ -42,7 +41,7 @@ public class MainController {
     return response;
   }
 
-  @PatchMapping("/main/user-todolist/{userListDatetime}/{userListNumber}")
+  @PatchMapping("/user-todolist/{userListDatetime}/{userListNumber}")
   public ResponseEntity<? super PatchUserToDoListResponseDto> patchUserToDoList(
       @RequestBody @Valid PatchUserToDoListRequestDto requestBody,
       @PathVariable("userListDatetime") String userListDatetime,
@@ -53,7 +52,7 @@ public class MainController {
     return response;
   }
 
-  @PostMapping("/main/user-todolist/post")
+  @PostMapping("/user-todolist/post")
   public ResponseEntity<? super PostUserToDoListResponseDto> postUserToDoList(
       @RequestBody @Valid PostUserToDoListRequestDto requestBody,
       @AuthenticationPrincipal String userEmail) {
@@ -61,7 +60,7 @@ public class MainController {
     return response;
   }
 
-  @DeleteMapping("/main/user-todolist/{userListNumber}")
+  @DeleteMapping("/user-todolist/{userListNumber}")
   public ResponseEntity<? super DeleteUserToDoListResponseDto> deleteUserToDoList(
       @PathVariable("userListNumber") List<Integer> userListNumber,
       @AuthenticationPrincipal String userEmail) {
