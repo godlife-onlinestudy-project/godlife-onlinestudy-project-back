@@ -30,7 +30,7 @@ public interface StudyUserListRepository extends JpaRepository<StudyUserListEnti
         "INNER JOIN user AS U " +
         "ON S.user_email = U.user_email " +
         "WHERE S.study_number = ?1 " +
-        "ORDER BY S.study_grade DESC ",
+        "ORDER BY S.study_grade ASC ",
         nativeQuery = true
     )
     List<StudyUserListResultSet> findByStudyUserList(Integer studyNumber);
