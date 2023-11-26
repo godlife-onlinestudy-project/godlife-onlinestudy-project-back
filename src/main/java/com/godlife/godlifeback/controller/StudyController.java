@@ -25,13 +25,13 @@ import com.godlife.godlifeback.service.StudyService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/main/home")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class StudyController {
 
     private final StudyService studyService;
 
-    @GetMapping("/{studyNumber}")
+    @GetMapping("/service/{studyNumber}/modify-study")
     public ResponseEntity<? super GetModifyStudyResponseDto> getModifyStudy(
         @PathVariable("studyNumber") Integer studyNumber,
         @AuthenticationPrincipal String userEmail
@@ -40,7 +40,7 @@ public class StudyController {
         return response;
     }
 
-    @GetMapping("/{studyNumber}/study-user-list")
+    @GetMapping("/service/{studyNumber}/study-user-list")
     public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(
         @PathVariable("studyNumber") Integer studyNumber,
         @AuthenticationPrincipal String userEmail
@@ -49,7 +49,7 @@ public class StudyController {
         return response;
     }
     
-    @PostMapping("")
+    @PostMapping("/studycreate")
     public ResponseEntity<? super PostStudyResponseDto> postStudy(
         @RequestBody @Valid PostStudyRequestDto requestBody,
         @AuthenticationPrincipal String userEmail
@@ -58,7 +58,7 @@ public class StudyController {
         return response;
     }
 
-    @PatchMapping("/{studyNumber}")
+    @PatchMapping("/service/{studyNumber}/modify-study")
     public ResponseEntity<? super PatchStudyResponseDto> patchStudy(
         @RequestBody @Valid PatchStudyRequestDto requestBody,
         @PathVariable("studyNumber") Integer studyNumber,
@@ -68,7 +68,7 @@ public class StudyController {
         return response;
     }
 
-    @DeleteMapping("/{studyNumber}/{userEmail}/study-user-list")
+    @DeleteMapping("/service/{studyNumber}/{userEmail}/study-user-list")
     public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(
         @PathVariable("studyNumber") Integer studyNumber,
         @PathVariable("userEmail") String userEmail,            // 특정 유저를 알아야하니 추가
