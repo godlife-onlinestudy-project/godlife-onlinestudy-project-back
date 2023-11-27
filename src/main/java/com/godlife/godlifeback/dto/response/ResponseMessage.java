@@ -4,10 +4,11 @@ public interface ResponseMessage {
 
     String SUCCESS = "Succss.";
 
-    String VALIDATION_FAILED = "Validation Failed.";
+    String VALIDATION_FAILED = "Validation failed.";
+    String DUPLICATED_EMAIL = "Duplicate email.";
+    String DUPLICATED_NICKNAME = "Duplicate nickname.";
+    String DUPLICATED_FAVORITE1 = "Duplicate Favorite1.";
 
-    String DUPLICATED_EMAIL = "Duplicated email.";
-    String DUPLICATED_NICKNAME = "Duplicated nickname.";
     String EMAIL_NOT_FOUND= "Email not found.";
     String DUPLICATED_PASSWORD = "Duplicated Password.";
     String DUPLICATED_CATEGORY = "Duplicated category."; 

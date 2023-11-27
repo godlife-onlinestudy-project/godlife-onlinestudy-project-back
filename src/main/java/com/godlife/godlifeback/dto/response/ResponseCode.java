@@ -7,9 +7,9 @@ public interface ResponseCode {
     String VALIDATION_FAILED = "VF";
 
     String DUPLICATED_EMAIL = "DE";
-
-    String DUPLICATED_TEL_NUMBER = "DT";
-    String DUPLICATED_NICKNAME = "DN";  
+    String DUPLICATED_NICKNAME = "DN";
+    String DUPLICATED_FAVORITE1 = "DF";
+    
     String DUPLICATED_PASSWORD = "DP";
     String DUPLICATED_CATEGORY = "DC";
 

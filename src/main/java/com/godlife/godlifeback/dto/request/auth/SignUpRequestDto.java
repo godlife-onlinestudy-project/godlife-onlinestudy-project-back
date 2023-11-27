@@ -1,9 +1,8 @@
 package com.godlife.godlifeback.dto.request.auth;
 
-import javax.validation.constraints.AssertTrue;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -17,22 +16,15 @@ import lombok.Setter;
 public class SignUpRequestDto {
 
     @NotBlank @Email
-    private String email;
+    private String userEmail;
 
-    @NotBlank @Size(min=8, max=20)
-    private String password;
+    @NotBlank @Size(min=8, max=20) @Pattern(regexp="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_?]).{8,15}")
+    private String userPassword;
 
-    @NotBlank
-    private String nickname;
-
-    @NotBlank @Pattern(regexp="^[0-9]{11,13}$")
-    private String telNumber;
+    @NotBlank @Size(min=1, max=20)
+    private String userNickname;
 
     @NotBlank
-    private String address;
+    private String userFavorite1;
 
-    private String addressDetail;
-
-    @NotNull @AssertTrue
-    private Boolean agreedPersonal; 
 }

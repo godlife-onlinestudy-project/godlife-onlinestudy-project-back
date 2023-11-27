@@ -37,7 +37,7 @@ public class WebSecurityConfig {
             .httpBasic().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
-            .antMatchers("/", "/file/**", "/api/auth/**").permitAll()
+            .antMatchers("/", "/file/**", "/api/**").permitAll()
             .anyRequest().authenticated().and()
             .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
 
