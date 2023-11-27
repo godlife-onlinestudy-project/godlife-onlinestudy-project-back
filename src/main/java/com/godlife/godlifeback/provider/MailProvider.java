@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MailProvider {
 
     private final JavaMailSender javaMailSender;
-    private static final String senderEmail= "gohwangbong@gmail.com";
+    private static final String senderEmail= "goneboong@gmail.com";
 
     public void sendMail(String email, String code) {
         
@@ -51,12 +51,12 @@ public class MailProvider {
             body += "<h1>" + number + "</h1>";
             body += "<h3>" + "감사합니다." + "</h3>";
             message.setText(body,"UTF-8", "html");
+            javaMailSender.send(message);
 
         } catch (MessagingException exception) {
             exception.printStackTrace();
         }
 
-        javaMailSender.send(message);
     }
 
 }

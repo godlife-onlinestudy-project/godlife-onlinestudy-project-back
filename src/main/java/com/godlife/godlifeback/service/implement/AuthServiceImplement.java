@@ -133,7 +133,7 @@ public class AuthServiceImplement implements AuthService{
             AuthenticateCodeCheckRequestDto dto) {
         try {
             int code = dto.getCode();
-            String email = dto.getEmail();
+            String email = dto.getUserEmail();
 
             EmailCodeEntity emailCodeEntity = emailCodeRepository.findByEmail(email);
             if (emailCodeEntity == null) return AuthenticateCodeCheckResponseDto.notExistCode();
