@@ -8,4 +8,5 @@ import com.godlife.godlifeback.entity.EmailCodeEntity;
 @Repository
 public interface EmailCodeRepository extends JpaRepository<EmailCodeEntity, String> {
     EmailCodeEntity findByEmail(String email);
+    // boolean findByCode(String code);
 }

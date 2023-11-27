@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.godlife.godlifeback.dto.request.auth.AuthenticateCodeCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SendAuthenticateCodeRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
+import com.godlife.godlifeback.dto.response.auth.AuthenticateCodeCheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SendAuthenticateCodeResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
@@ -58,6 +60,14 @@ public class AuthController {
         @RequestBody @Valid SendAuthenticateCodeRequestDto requestBody
     ) {
         ResponseEntity<? super SendAuthenticateCodeResponseDto> response = authService.sendAuthenticateCode(requestBody);
+        return response;
+    }
+
+    @PostMapping("/send-authenticate-code-check")
+    public ResponseEntity<? super AuthenticateCodeCheckResponseDto> authenticateCodecheck(
+        @RequestBody @Valid AuthenticateCodeCheckRequestDto requestBody
+    ) {
+        ResponseEntity<? super AuthenticateCodeCheckResponseDto> response = authService.authenticateCodeCheck(requestBody);
         return response;
     }
     

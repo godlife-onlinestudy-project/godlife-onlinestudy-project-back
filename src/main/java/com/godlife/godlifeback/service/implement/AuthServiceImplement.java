@@ -5,11 +5,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.godlife.godlifeback.dto.request.auth.AuthenticateCodeCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SendAuthenticateCodeRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInEmailCheckRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignInRequestDto;
 import com.godlife.godlifeback.dto.request.auth.SignUpRequestDto;
 import com.godlife.godlifeback.dto.response.ResponseDto;
+import com.godlife.godlifeback.dto.response.auth.AuthenticateCodeCheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SendAuthenticateCodeResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInEmailcheckResponseDto;
 import com.godlife.godlifeback.dto.response.auth.SignInResponseDto;
@@ -124,6 +126,29 @@ public class AuthServiceImplement implements AuthService{
 
         return SendAuthenticateCodeResponseDto.success();
 
+    }
+
+    @Override
+    public ResponseEntity<? super AuthenticateCodeCheckResponseDto> authenticateCodeCheck(
+            AuthenticateCodeCheckRequestDto dto) {
+        try {
+            int code = dto.getCode();
+            String email = dto.getEmail();
+
+            EmailCodeEntity emailCodeEntity = emailCodeRepository.findByEmail(email);
+            if (emailCodeEntity == null) return AuthenticateCodeCheckResponseDto.notExistCode();
+
+            int entityCode = emailCodeEntity.getCode();
+            boolean isEqualCode = code == entityCode;
+            if (!isEqualCode) AuthenticateCodeCheckResponseDto.notExistCode();
+
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+
+        return AuthenticateCodeCheckResponseDto.success();
     }
 
 }
