@@ -25,41 +25,39 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+    
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 
-  @Bean
-  protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            .cors().and()
+            .csrf().disable()
+            .httpBasic().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .antMatchers("/", "/file/**", "/api/auth/**").permitAll()
+            .anyRequest().authenticated().and()
+            .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
 
-    httpSecurity
-        .cors().and()
-        .csrf().disable()
-        .httpBasic().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests()
-        .antMatchers("/", "/file/**", "/api/auth/**").permitAll()
-        // .antMatchers(HttpMethod.GET, "/api/main/home/**", "/file/image/*",
-        // "/api/main/**").permitAll()
-        .anyRequest().authenticated().and()
-        .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-    httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        return httpSecurity.build();
 
-    return httpSecurity.build();
-
-  }
+    }
 
 }
 
 class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-  @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException authException) throws IOException, ServletException {
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+        
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("{ \"code\": \"AF\", \"message\": \"Authorization Failed.\" }");
 
-    response.setContentType("application/json");
-    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    response.getWriter().write("{ \"code\": \"AF\", \"message\": \"Authorization Failed.\" }");
-
-  }
+    }
 }
