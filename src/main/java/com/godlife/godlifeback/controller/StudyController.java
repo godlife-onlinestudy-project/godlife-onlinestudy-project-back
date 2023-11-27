@@ -21,6 +21,7 @@ import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.PostStudyResponseDto;
 import com.godlife.godlifeback.service.StudyService;
+import com.godlife.godlifeback.dto.response.study.GetTop5StudyListResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,6 +49,14 @@ public class StudyController {
         ResponseEntity<? super GetStudyUserListResponseDto> response = studyService.getStudyUserList(studyNumber, userEmail);
         return response;
     }
+
+    @GetMapping("/study/top-5/{studyCategory1}")
+    public ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(
+        @PathVariable("studyCategory1") String studyCategory1,
+        @AuthenticationPrincipal String Email) {
+        ResponseEntity<? super GetTop5StudyListResponseDto> response = studyService.getTop5StudyList(studyCategory1, Email);
+    return response;
+  }
     
     @PostMapping("/studycreate")
     public ResponseEntity<? super PostStudyResponseDto> postStudy(
@@ -77,5 +86,4 @@ public class StudyController {
         ResponseEntity<? super DeleteStudyUserListResponseDto> response = studyService.deleteStudyUserList(studyNumber, userEmail, createStudyUserEmail);
         return response;
     }
-
 }

@@ -19,9 +19,19 @@ import com.godlife.godlifeback.entity.StudyUserListEntity;
 import com.godlife.godlifeback.repository.StudyRepository;
 import com.godlife.godlifeback.repository.StudyUserListRepository;
 import com.godlife.godlifeback.repository.resultSet.StudyUserListResultSet;
+import com.godlife.godlifeback.dto.response.study.GetTop5StudyListResponseDto;
+import com.godlife.godlifeback.entity.StudyViewEntity;
+import com.godlife.godlifeback.repository.StudyViewRespository;
+
 import com.godlife.godlifeback.service.StudyService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -38,8 +48,9 @@ public class StudyServiceImplement implements StudyService {
         try {
 
             studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null) return GetModifyStudyResponseDto.notExistStudy();
-            
+            if (studyEntity == null)
+                return GetModifyStudyResponseDto.notExistStudy();
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -59,15 +70,17 @@ public class StudyServiceImplement implements StudyService {
             // if(!existedUser) return PostUserResponseDto.notExistsUser();
 
             boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return GetStudyUserListResponseDto.notExistStudy();
+            if (!existedStudy)
+                return GetStudyUserListResponseDto.notExistStudy();
 
             System.out.println(userEmail);
 
             boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
-            if(!existedUserList) return GetStudyUserListResponseDto.notExistUser();
+            if (!existedUserList)
+                return GetStudyUserListResponseDto.notExistUser();
 
             studyUserListResultSets = studyUserListRepository.findByStudyUserList(studyNumber);
-            
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -84,7 +97,7 @@ public class StudyServiceImplement implements StudyService {
             studyRepository.save(studyEntity);
 
             Integer studyNumber = studyEntity.getStudyNumber();
-            
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -99,14 +112,16 @@ public class StudyServiceImplement implements StudyService {
         try {
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null) return PatchStudyResponseDto.notExistStudy();
+            if (studyEntity == null)
+                return PatchStudyResponseDto.notExistStudy();
 
             boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(userEmail);
-            if (!equalCreater) return PatchStudyResponseDto.noPermission();
+            if (!equalCreater)
+                return PatchStudyResponseDto.noPermission();
 
             studyEntity.patch(dto);
             studyRepository.save(studyEntity);
-            
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -121,16 +136,19 @@ public class StudyServiceImplement implements StudyService {
         try {
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null) return DeleteStudyUserListResponseDto.notExistStudy();
+            if (studyEntity == null)
+                return DeleteStudyUserListResponseDto.notExistStudy();
 
             boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
-            if (!isCreater) return DeleteStudyUserListResponseDto.noPermission();
+            if (!isCreater)
+                return DeleteStudyUserListResponseDto.noPermission();
 
             StudyUserListEntity studyUserListEntity = studyUserListRepository.findByStudyNumberAndUserEmail(studyNumber, userEmail);
-            if (studyUserListEntity == null) return DeleteStudyUserListResponseDto.notExistUser();
+            if (studyUserListEntity == null)
+                return DeleteStudyUserListResponseDto.notExistUser();
 
             studyUserListRepository.delete(studyUserListEntity);
-            
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
@@ -139,6 +157,27 @@ public class StudyServiceImplement implements StudyService {
         return DeleteStudyUserListResponseDto.success();
 
     }
-    
-    
+
+    private final StudyViewRespository studyViewRespository;
+
+    @Override
+    public ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(String studyCategory1, String email) {
+
+        List<StudyViewEntity> studyViewEntities = new ArrayList<>();
+
+        try {
+            Date now = Date.from(Instant.now());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String DaysAgo = simpleDateFormat.format(now);
+
+            studyViewEntities = studyViewRespository
+                    .findTop5ByStudyCategory1AndStudyEndDateGreaterThanOrderByStudyEndDateDesc(studyCategory1, DaysAgo);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetTop5StudyListResponseDto.success(studyViewEntities);
+
+    }
 }
