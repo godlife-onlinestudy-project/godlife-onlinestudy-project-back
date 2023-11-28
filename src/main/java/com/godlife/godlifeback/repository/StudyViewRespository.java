@@ -13,4 +13,8 @@ public interface StudyViewRespository extends JpaRepository<StudyViewEntity, Int
   List<StudyViewEntity> findTop5ByStudyCategory1AndStudyEndDateGreaterThanOrderByStudyEndDateDesc(String studyCategory1,
       String studyEndDate);
 
+  List<StudyViewEntity> findByStudyEndDateGreaterThanOrderByStudyPublicCheckDescStudyEndDateDesc(String studyEndDate);
+
+  List<StudyViewEntity> findByStudyNameContainsAndStudyEndDateGreaterThanOrderByStudyEndDateDesc(String studyName,
+      String studyEndDate);
 }

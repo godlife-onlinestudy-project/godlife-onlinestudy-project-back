@@ -9,6 +9,8 @@ import java.util.List;
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
 import com.godlife.godlifeback.dto.response.ResponseDto;
+import com.godlife.godlifeback.dto.response.study.GetSearchStudyListResponseDto;
+import com.godlife.godlifeback.dto.response.study.GetSearchWordStudyListResponseDto;
 import com.godlife.godlifeback.dto.response.study.DeleteStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
@@ -37,147 +39,183 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class StudyServiceImplement implements StudyService {
 
-    private final StudyRepository studyRepository;
-    private final StudyUserListRepository studyUserListRepository;
+  private final StudyRepository studyRepository;
+  private final StudyUserListRepository studyUserListRepository;
+  private final StudyViewRespository studyViewRespository;
 
-    @Override
-    public ResponseEntity<? super GetModifyStudyResponseDto> getModifyStudy(Integer studyNumber, String userEmail) {
+  Date now = Date.from(Instant.now());
+  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  String DaysAgo = simpleDateFormat.format(now);
 
-        StudyEntity studyEntity = null;
+  @Override
+  public ResponseEntity<? super GetModifyStudyResponseDto> getModifyStudy(Integer studyNumber, String userEmail) {
 
-        try {
+    StudyEntity studyEntity = null;
 
-            studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null)
-                return GetModifyStudyResponseDto.notExistStudy();
+    try {
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
+      studyEntity = studyRepository.findByStudyNumber(studyNumber);
+      if (studyEntity == null)
+        return GetModifyStudyResponseDto.notExistStudy();
 
-        return GetModifyStudyResponseDto.success(studyEntity);
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
 
-    @Override
-    public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail) {
+    return GetModifyStudyResponseDto.success(studyEntity);
+  }
 
-        List<StudyUserListResultSet> studyUserListResultSets = new ArrayList<>();
+  @Override
+  public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail) {
 
-        try {
+    List<StudyUserListResultSet> studyUserListResultSets = new ArrayList<>();
 
-            // boolean existedUser = userRepository.existsByEmail(userEmail);
-            // if(!existedUser) return PostUserResponseDto.notExistsUser();
+    try {
 
-            boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
-            if (!existedStudy)
-                return GetStudyUserListResponseDto.notExistStudy();
+      // boolean existedUser = userRepository.existsByEmail(userEmail);
+      // if(!existedUser) return PostUserResponseDto.notExistsUser();
 
-            System.out.println(userEmail);
+      boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+      if (!existedStudy)
+        return GetStudyUserListResponseDto.notExistStudy();
 
-            boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
-            if (!existedUserList)
-                return GetStudyUserListResponseDto.notExistUser();
+      System.out.println(userEmail);
 
-            studyUserListResultSets = studyUserListRepository.findByStudyUserList(studyNumber);
+      boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
+      if (!existedUserList)
+        return GetStudyUserListResponseDto.notExistUser();
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return GetStudyUserListResponseDto.success(studyUserListResultSets);
+      studyUserListResultSets = studyUserListRepository.findByStudyUserList(studyNumber);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+    return GetStudyUserListResponseDto.success(studyUserListResultSets);
+  }
+
+  @Override
+  public ResponseEntity<? super PostStudyResponseDto> postStudy(PostStudyRequestDto dto, String userEmail) {
+
+    try {
+
+      StudyEntity studyEntity = new StudyEntity(dto, userEmail);
+      studyRepository.save(studyEntity);
+
+      Integer studyNumber = studyEntity.getStudyNumber();
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
 
-    @Override
-    public ResponseEntity<? super PostStudyResponseDto> postStudy(PostStudyRequestDto dto, String userEmail) {
+    return PostStudyResponseDto.success();
+  }
 
-        try {
+  @Override
+  public ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber,
+      String userEmail) {
 
-            StudyEntity studyEntity = new StudyEntity(dto, userEmail);
-            studyRepository.save(studyEntity);
+    try {
 
-            Integer studyNumber = studyEntity.getStudyNumber();
+      StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+      if (studyEntity == null)
+        return PatchStudyResponseDto.notExistStudy();
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
+      boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(userEmail);
+      if (!equalCreater)
+        return PatchStudyResponseDto.noPermission();
 
-        return PostStudyResponseDto.success();
+      studyEntity.patch(dto);
+      studyRepository.save(studyEntity);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
 
-    @Override
-    public ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber, String userEmail) {
+    return PatchStudyResponseDto.success();
+  }
 
-        try {
+  @Override
+  public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber,
+      String userEmail, String createStudyUserEmail) {
 
-            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null)
-                return PatchStudyResponseDto.notExistStudy();
+    try {
 
-            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(userEmail);
-            if (!equalCreater)
-                return PatchStudyResponseDto.noPermission();
+      StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+      if (studyEntity == null)
+        return DeleteStudyUserListResponseDto.notExistStudy();
 
-            studyEntity.patch(dto);
-            studyRepository.save(studyEntity);
+      boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+      if (!isCreater)
+        return DeleteStudyUserListResponseDto.noPermission();
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
+      StudyUserListEntity studyUserListEntity = studyUserListRepository.findByStudyNumberAndUserEmail(studyNumber,
+          userEmail);
+      if (studyUserListEntity == null)
+        return DeleteStudyUserListResponseDto.notExistUser();
 
-        return PatchStudyResponseDto.success();
+      studyUserListRepository.delete(studyUserListEntity);
+
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
 
-    @Override
-    public ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail, String createStudyUserEmail) {
+    return DeleteStudyUserListResponseDto.success();
 
-        try {
+  }
 
-            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null)
-                return DeleteStudyUserListResponseDto.notExistStudy();
+  @Override
+  public ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(String studyCategory1, String email) {
 
-            boolean isCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
-            if (!isCreater)
-                return DeleteStudyUserListResponseDto.noPermission();
+    List<StudyViewEntity> studyViewEntities = new ArrayList<>();
 
-            StudyUserListEntity studyUserListEntity = studyUserListRepository.findByStudyNumberAndUserEmail(studyNumber, userEmail);
-            if (studyUserListEntity == null)
-                return DeleteStudyUserListResponseDto.notExistUser();
+    try {
 
-            studyUserListRepository.delete(studyUserListEntity);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-
-        return DeleteStudyUserListResponseDto.success();
-
+      studyViewEntities = studyViewRespository
+          .findTop5ByStudyCategory1AndStudyEndDateGreaterThanOrderByStudyEndDateDesc(studyCategory1, DaysAgo);
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
 
-    private final StudyViewRespository studyViewRespository;
+    return GetTop5StudyListResponseDto.success(studyViewEntities);
 
-    @Override
-    public ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(String studyCategory1, String email) {
+  }
 
-        List<StudyViewEntity> studyViewEntities = new ArrayList<>();
+  @Override
+  public ResponseEntity<? super GetSearchStudyListResponseDto> getSearchStudyList(String Email) {
 
-        try {
-            Date now = Date.from(Instant.now());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String DaysAgo = simpleDateFormat.format(now);
+    List<StudyViewEntity> studyViewEntities = new ArrayList<>();
 
-            studyViewEntities = studyViewRespository
-                    .findTop5ByStudyCategory1AndStudyEndDateGreaterThanOrderByStudyEndDateDesc(studyCategory1, DaysAgo);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-
-        return GetTop5StudyListResponseDto.success(studyViewEntities);
-
+    try {
+      studyViewEntities = studyViewRespository
+          .findByStudyEndDateGreaterThanOrderByStudyPublicCheckDescStudyEndDateDesc(DaysAgo);
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
     }
+
+    return GetSearchStudyListResponseDto.success(studyViewEntities);
+  }
+
+  @Override
+  public ResponseEntity<? super GetSearchWordStudyListResponseDto> getSearchWordStudyList(String studyName,
+      String Email) {
+
+    List<StudyViewEntity> studyViewEntities = new ArrayList<>();
+
+    try {
+      studyViewEntities = studyViewRespository
+          .findByStudyNameContainsAndStudyEndDateGreaterThanOrderByStudyEndDateDesc(studyName, DaysAgo);
+    } catch (Exception exception) {
+      exception.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return GetSearchWordStudyListResponseDto.success(studyViewEntities);
+  }
 }
