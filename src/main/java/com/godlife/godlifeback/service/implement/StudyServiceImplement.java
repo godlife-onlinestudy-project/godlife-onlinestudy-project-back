@@ -23,6 +23,7 @@ import com.godlife.godlifeback.dto.response.study.PostStudyResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.DeleteNoticeResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.DeleteToDoListResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.GetNoticeListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.GetStudyResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.GetToDoListResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.PatchNoticeResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.PatchToDoListResponseDto;
@@ -47,8 +48,8 @@ import com.godlife.godlifeback.service.StudyService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-import java.util.ArrayList;
+// import java.util.List;
+// import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -223,6 +224,21 @@ public class StudyServiceImplement implements StudyService {
 
       return GetSearchStudyListResponseDto.success(studyViewEntities);
   }
+
+    @Override
+    public ResponseEntity<? super GetSearchWordStudyListResponseDto> getSearchWordStudyList(String studyName,String Email) {
+      List<StudyViewEntity> studyViewEntities = new ArrayList<>();
+
+      try {
+        studyViewEntities = studyViewRespository
+            .findByStudyNameContainsAndStudyEndDateGreaterThanOrderByStudyEndDateDesc(studyName, DaysAgo);
+      } catch (Exception exception) {
+        exception.printStackTrace();
+        return ResponseDto.databaseError();
+      }      
+
+      return GetSearchWordStudyListResponseDto.success(studyViewEntities);
+    }
 
     
     private final StudyNoticeRepository studyNoticeRepository;
@@ -432,10 +448,25 @@ public class StudyServiceImplement implements StudyService {
     }
 
     @Override
-    public ResponseEntity<? super GetSearchWordStudyListResponseDto> getSearchWordStudyList(String studyName,
-        String Email) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getSearchWordStudyList'");
+    public ResponseEntity<? super GetStudyResponseDto> getStudy(String userEmail, Integer studyNumber) {
+
+        StudyEntity studyEntity = null;
+
+        try {
+            
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if(!existedUser) return  GetStudyResponseDto.notExistUser();
+
+            studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            // Integer studyNumber = studyEntity.getStudyNumber();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetStudyResponseDto.success(studyEntity);
     }
+
 
 }
