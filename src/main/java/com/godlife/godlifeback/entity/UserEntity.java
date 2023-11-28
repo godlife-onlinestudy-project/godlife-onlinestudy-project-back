@@ -44,7 +44,8 @@ public class UserEntity {
     public UserEntity(String userEmail, String userNickname) {
         this.userEmail = userEmail;
         this.userNickname = userNickname;
-        
+        userFavorite1 = "자격증";
+        userExperience = 0;
     }
 
     public void patchUserNickname(PatchUserNicknameRequestDto dto) {
