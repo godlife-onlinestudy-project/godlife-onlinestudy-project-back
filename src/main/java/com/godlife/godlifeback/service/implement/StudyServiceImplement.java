@@ -105,8 +105,6 @@ public class StudyServiceImplement implements StudyService {
       if (!existedStudy)
         return GetStudyUserListResponseDto.notExistStudy();
 
-      System.out.println(userEmail);
-
       boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
       if (!existedUserList)
         return GetStudyUserListResponseDto.notExistUser();
