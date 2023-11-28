@@ -1,4 +1,5 @@
 package com.godlife.godlifeback.entity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -38,7 +39,14 @@ public class UserEntity {
         this.userNickname = dto.getUserNickname();
         this.userFavorite1 = dto.getUserFavorite1();
         this.userExperience = 0;
-    }   
+    }
+
+    public UserEntity(String userEmail, String userNickname) {
+        this.userEmail = userEmail;
+        this.userNickname = userNickname;
+        userFavorite1 = "자격증";
+        userExperience = 0;
+    }
 
     public void patchUserNickname(PatchUserNicknameRequestDto dto) {
         this.userNickname = dto.getUserNickname();

@@ -10,6 +10,8 @@ import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.PostStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetTop5StudyListResponseDto;
+import com.godlife.godlifeback.dto.response.study.GetSearchWordStudyListResponseDto;
+import com.godlife.godlifeback.dto.response.study.GetSearchStudyListResponseDto;
 
 import com.godlife.godlifeback.dto.request.studyService.PostNoticeRequestDto;
 import com.godlife.godlifeback.dto.request.studyService.PatchNoticeRequestDto;
@@ -29,18 +31,24 @@ import com.godlife.godlifeback.dto.response.studyService.PatchToDoListResponseDt
 import com.godlife.godlifeback.dto.response.studyService.DeleteToDoListResponseDto;
 
 public interface StudyService {
-    
-    ResponseEntity<? super GetModifyStudyResponseDto> getModifyStudy(Integer studyNumber, String userEmail);
 
-    ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail);
+  ResponseEntity<? super GetSearchStudyListResponseDto> getSearchStudyList(String Email);
 
-    ResponseEntity<? super PostStudyResponseDto> postStudy(PostStudyRequestDto dto, String userEmail);
+  ResponseEntity<? super GetSearchWordStudyListResponseDto> getSearchWordStudyList(String studyName, String Email);
 
-    ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber, String userEmail);
+  ResponseEntity<? super GetModifyStudyResponseDto> getModifyStudy(Integer studyNumber, String userEmail);
 
-    ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail, String createStudyUserEmail);
+  ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail);
 
-    ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(String studyCategory1, String Email);
+  ResponseEntity<? super PostStudyResponseDto> postStudy(PostStudyRequestDto dto, String userEmail);
+
+  ResponseEntity<? super PatchStudyResponseDto> patchStudy(PatchStudyRequestDto dto, Integer studyNumber,
+      String userEmail);
+
+  ResponseEntity<? super DeleteStudyUserListResponseDto> deleteStudyUserList(Integer studyNumber, String userEmail,
+      String createStudyUserEmail);
+
+  ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(String studyCategory1, String Email);
 
     ResponseEntity<? super GetNoticeListResponseDto> getNotice(String userEmail,Integer studyNumber);
 

@@ -12,10 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class GetTop5StudyListResponseDto extends ResponseDto {
 
   private List<StudyListItem> top5List;
