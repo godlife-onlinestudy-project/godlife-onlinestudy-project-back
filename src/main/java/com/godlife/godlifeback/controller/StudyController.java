@@ -34,7 +34,7 @@ public class StudyController {
 
   private final StudyService studyService;
 
-  @GetMapping("/study/top-5/{studyCategory1}")
+  @GetMapping("/main/top-5/{studyCategory1}")
   public ResponseEntity<? super GetTop5StudyListResponseDto> getTop5StudyList(
       @PathVariable("studyCategory1") String studyCategory1,
       @AuthenticationPrincipal String Email) {
@@ -42,14 +42,14 @@ public class StudyController {
     return response;
   }
 
-  @GetMapping("/study/search")
+  @GetMapping("/main/search")
   public ResponseEntity<? super GetSearchStudyListResponseDto> getSearchStudyList(
       @AuthenticationPrincipal String Email) {
     ResponseEntity<? super GetSearchStudyListResponseDto> response = studyService.getSearchStudyList(Email);
     return response;
   }
 
-  @GetMapping("/study/search/{studyName}")
+  @GetMapping("/main/search/{studyName}")
   public ResponseEntity<? super GetSearchWordStudyListResponseDto> getSearchWordStudyList(
       @PathVariable("studyName") String studyName,
       @AuthenticationPrincipal String Email) {
