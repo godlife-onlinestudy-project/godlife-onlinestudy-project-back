@@ -457,8 +457,10 @@ public class StudyServiceImplement implements StudyService {
             boolean existedUser = userRepository.existsByUserEmail(userEmail);
             if(!existedUser) return  GetStudyResponseDto.notExistUser();
 
+            boolean  existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+            if(!existedStudy) return  GetStudyResponseDto.notExistStudy();
+ 
             studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            // Integer studyNumber = studyEntity.getStudyNumber();
 
         } catch (Exception exception) {
             exception.printStackTrace();
