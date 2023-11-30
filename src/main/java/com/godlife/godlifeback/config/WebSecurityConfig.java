@@ -41,7 +41,7 @@ public class WebSecurityConfig {
             .httpBasic().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
-            .antMatchers("/", "/file/**", "/api/auth/**", "/api/oauth2/**", "/oauth2/**").permitAll()
+            .antMatchers("/file/**", "/api/auth/**", "/api/oauth2/**", "/oauth2/**").permitAll()
             .anyRequest().authenticated().and()
             .oauth2Login()
             .redirectionEndpoint().baseUri("/oauth2/callback/*").and()
