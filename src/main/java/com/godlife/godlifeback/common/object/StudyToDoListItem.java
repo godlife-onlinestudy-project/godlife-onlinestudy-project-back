@@ -10,24 +10,24 @@ import com.godlife.godlifeback.repository.resultSet.StudyToDoListResultSet;
 
 @Getter
 @Setter
-public class StudyTodoListItem {
+public class StudyToDoListItem {
     private int studyListNumber;
     private int studyNumber;
     private String studyListContent;
     private Boolean studyListCheck;
 
-    public StudyTodoListItem(StudyToDoListResultSet resultSet){
+    public StudyToDoListItem(StudyToDoListResultSet resultSet){
         this.studyListNumber = resultSet.getStudyListNumber();
         this.studyNumber = resultSet.getStudyNumber();
         this.studyListContent = resultSet.getStudyListContent();
         this.studyListCheck = resultSet.getStudyListCheck();
     }
 
-    public static List<StudyTodoListItem> getToDoList(List<StudyToDoListResultSet> resultSets){
-        List<StudyTodoListItem> list = new ArrayList<>();
+    public static List<StudyToDoListItem> getToDoList(List<StudyToDoListResultSet> resultSets){
+        List<StudyToDoListItem> list = new ArrayList<>();
 
         for(StudyToDoListResultSet resultSet :  resultSets){
-            StudyTodoListItem studyToDoListItem = new StudyTodoListItem(resultSet);
+            StudyToDoListItem studyToDoListItem = new StudyToDoListItem(resultSet);
             list.add(studyToDoListItem);
         }
 

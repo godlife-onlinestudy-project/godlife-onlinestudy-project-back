@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.godlife.godlifeback.common.object.StudyTodoListItem;
+import com.godlife.godlifeback.common.object.StudyToDoListItem;
 import com.godlife.godlifeback.dto.response.ResponseCode;
 import com.godlife.godlifeback.dto.response.ResponseDto;
 import com.godlife.godlifeback.dto.response.ResponseMessage;
@@ -16,11 +16,11 @@ import lombok.Getter;
 @Getter
 public class GetStudyTodoListResponseDto extends ResponseDto{
     
-    private List<StudyTodoListItem> todoList;
+    private List<StudyToDoListItem> todoList;
     
     private GetStudyTodoListResponseDto(String code, String message, List<StudyToDoListResultSet> resultSets){
         super(code, message);
-        this.todoList = StudyTodoListItem.getToDoList(resultSets);
+        this.todoList = StudyToDoListItem.getToDoList(resultSets);
     }
 
     public static ResponseEntity<GetStudyTodoListResponseDto> success(List<StudyToDoListResultSet> resultSets){
