@@ -6,8 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.godlife.godlifeback.dto.request.studyService.PatchNoticeRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PostNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyNoticeRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,12 +27,12 @@ public class StudyNoticeEntity {
 
     private String studyNoticeContent;
 
-    public StudyNoticeEntity(PostNoticeRequestDto dto, Integer studyNumber){
+    public StudyNoticeEntity(PostStudyNoticeRequestDto dto, Integer studyNumber){
         this.studyNumber = studyNumber;
         this.studyNoticeContent = dto.getStudyNoticeContent();
     }
 
-    public void patchNotice(PatchNoticeRequestDto dto){
+    public void patchNotice(PatchStudyNoticeRequestDto dto){
         this.studyNoticeContent = dto.getStudyNoticeContent();
     }
 }

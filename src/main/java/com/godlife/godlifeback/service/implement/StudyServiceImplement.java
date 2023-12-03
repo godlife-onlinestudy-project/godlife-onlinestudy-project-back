@@ -8,10 +8,10 @@ import java.util.List;
 
 import com.godlife.godlifeback.dto.request.study.PatchStudyRequestDto;
 import com.godlife.godlifeback.dto.request.study.PostStudyRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PatchNoticeRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PatchToDoListRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PostNoticeRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PostToDoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyTodoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyToDoListRequestDto;
 import com.godlife.godlifeback.dto.response.ResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetSearchStudyListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetSearchWordStudyListResponseDto;
@@ -20,15 +20,15 @@ import com.godlife.godlifeback.dto.response.study.GetModifyStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetStudyUserListResponseDto;
 import com.godlife.godlifeback.dto.response.study.PatchStudyResponseDto;
 import com.godlife.godlifeback.dto.response.study.PostStudyResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.DeleteNoticeResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.DeleteToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.GetNoticeListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.DeleteStudyNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.DeleteStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.GetStudyNoticeListResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.GetStudyResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.GetToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PatchNoticeResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PatchToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PostNoticeResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PostToDoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.GetStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PatchStudyNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PatchStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PostStudyNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife.godlifeback.entity.StudyEntity;
 import com.godlife.godlifeback.entity.StudyNoticeEntity;
 import com.godlife.godlifeback.entity.StudyTodolistEntity;
@@ -243,7 +243,7 @@ public class StudyServiceImplement implements StudyService {
 
     
     @Override
-    public ResponseEntity<? super GetNoticeListResponseDto> getNotice(String userEmail,Integer studyNumber) {
+    public ResponseEntity<? super GetStudyNoticeListResponseDto> getNotice(String userEmail,Integer studyNumber) {
 
         List<StudyNoticeListResultSet> resultSets = new ArrayList<>();
         
@@ -251,11 +251,12 @@ public class StudyServiceImplement implements StudyService {
 
             // 접속 유저가 존재하는지 확인 여부
             boolean existedUser = userRepository.existsByUserEmail(userEmail);
-            if(!existedUser ) return GetNoticeListResponseDto.notExistUser();
+            if(!existedUser ) return GetStudyNoticeListResponseDto.notExistUser();
 
             // 스터디 방 존재 여부
             boolean existedStudy =  studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return GetNoticeListResponseDto.notExistStudy();        
+            if(!existedStudy) return GetStudyNoticeListResponseDto.notExistStudy();        
+            
             
             resultSets = studyNoticeRepository.findByNoticeList(studyNumber);
 
@@ -265,22 +266,26 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return GetNoticeListResponseDto.success(resultSets);
+        return GetStudyNoticeListResponseDto.success(resultSets);
     }
 
 
     @Override
-    public ResponseEntity<? super PostNoticeResponseDto> postNotice(PostNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
+    public ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(PostStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
 
         try {
 
             // 접속 유저가 존재하는지 확인 여부
             boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
-            if(!existedUser ) return PostNoticeResponseDto.notExistUser();
+            if(!existedUser ) return PostStudyNoticeResponseDto.notExistUser();
 
             // 스터디 방 존재 여부
-            boolean existedStudy =  studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return PostNoticeResponseDto.notExistStudy();         
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PostStudyNoticeResponseDto.notExistStudy();    
+            
+            //  유저가 방생성 유저인지
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PostStudyNoticeResponseDto.noPermission();            
             
             StudyNoticeEntity studyNoticeEntity = new StudyNoticeEntity(dto, studyNumber);
             studyNoticeRepository.save(studyNoticeEntity);            
@@ -290,24 +295,24 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return PostNoticeResponseDto.success();
+        return PostStudyNoticeResponseDto.success();
     }
 
     @Override
-    public ResponseEntity<? super PatchNoticeResponseDto> patchNotice(PatchNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber, Integer studyNoticeNumber) {
+    public ResponseEntity<? super PatchStudyNoticeResponseDto> patchNotice(PatchStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber, Integer studyNoticeNumber) {
         
         try {
 
             // 접속 유저가 존재하는지 확인 여부
             boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
-            if(!existedUser ) return PatchNoticeResponseDto.notExistUser();
+            if(!existedUser ) return PatchStudyNoticeResponseDto.notExistUser();
 
             // 스터디 방 존재 여부
             boolean existedStudy =  studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return PatchNoticeResponseDto.notExistStudy();        
+            if(!existedStudy) return PatchStudyNoticeResponseDto.notExistStudy();        
 
             StudyNoticeEntity studyNoticeEntity = studyNoticeRepository.findByStudyNoticeNumber(studyNoticeNumber);
-            if(studyNoticeEntity == null) return PatchNoticeResponseDto.notExistNotice();            
+            if(studyNoticeEntity == null) return PatchStudyNoticeResponseDto.notExistNotice();            
             
             studyNoticeEntity.patchNotice(dto);
             studyNoticeRepository.save(studyNoticeEntity);
@@ -318,23 +323,23 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return PatchNoticeResponseDto.success();
+        return PatchStudyNoticeResponseDto.success();
     }
 
     @Override
-    public ResponseEntity<? super DeleteNoticeResponseDto> deleteNotice(String createStudyUserEmail,Integer studyNumber, Integer studyNoticeNumber) {
+    public ResponseEntity<? super DeleteStudyNoticeResponseDto> deleteNotice(String createStudyUserEmail,Integer studyNumber, Integer studyNoticeNumber) {
 
         try {
             // 접속 유저가 존재하는지 확인 여부
             boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
-            if(!existedUser ) return DeleteNoticeResponseDto.notExistUser();
+            if(!existedUser ) return DeleteStudyNoticeResponseDto.notExistUser();
 
             // 스터디 방 존재 여부
             boolean existedStudy =  studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return DeleteNoticeResponseDto.notExistStudy();  
+            if(!existedStudy) return DeleteStudyNoticeResponseDto.notExistStudy();  
             
             StudyNoticeEntity studyNoticeEntity = studyNoticeRepository.findByStudyNoticeNumber(studyNoticeNumber);
-            if(studyNoticeEntity == null) return DeleteNoticeResponseDto.notExistNotice();
+            if(studyNoticeEntity == null) return DeleteStudyNoticeResponseDto.notExistNotice();
 
             studyNoticeRepository.delete(studyNoticeEntity);;
 
@@ -343,22 +348,22 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return DeleteNoticeResponseDto.success();
+        return DeleteStudyNoticeResponseDto.success();
     }
 
     private final StudyToDoListRepository studyToDoListRespository;
 
     @Override
-    public ResponseEntity<? super GetToDoListResponseDto> getTodolist(String userEmail,Integer studyNumber) {
+    public ResponseEntity<? super GetStudyTodoListResponseDto> getTodolist(String userEmail,Integer studyNumber) {
 
         List<StudyToDoListResultSet> resultSets = new ArrayList<>();
 
         try {
             boolean existedUser = userRepository.existsByUserEmail(userEmail);
-            if(!existedUser) GetToDoListResponseDto.notExistsUser();
+            if(!existedUser) GetStudyTodoListResponseDto.notExistsUser();
 
             boolean existedStudy =  studyRepository.existsByStudyNumber(studyNumber);
-            if(!existedStudy) return GetToDoListResponseDto.notExistStudy();
+            if(!existedStudy) return GetStudyTodoListResponseDto.notExistStudy();
 
             resultSets = studyToDoListRespository.findByStudyNumber(studyNumber);
 
@@ -367,45 +372,50 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return GetToDoListResponseDto.success(resultSets);
+        return GetStudyTodoListResponseDto.success(resultSets);
     }
 
     @Override
-    public ResponseEntity<? super PostToDoListResponseDto> postTodo(PostToDoListRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
-        
-        try {
-            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if( studyEntity == null) return PostNoticeResponseDto.notExistStudy();
-
-            //  유저가 방생성 유저인지
-            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
-            if(!equalCreater) return PostNoticeResponseDto.noPermission();
-            
-            StudyTodolistEntity studyTodolistEntity = new StudyTodolistEntity(dto , studyNumber);
-            studyToDoListRespository.save(studyTodolistEntity);            
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return PostToDoListResponseDto.success();
-    }
-
-    @Override
-    public ResponseEntity<? super PatchToDoListResponseDto> patchTodo(PatchToDoListRequestDto dto,String createStudyUserEmail, Integer studyNumber, Integer studyListNumber) {
+    public ResponseEntity<? super PostStudyTodoListResponseDto> postTodo(PostStudyToDoListRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
         
         try {
 
             boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
-            if(!existedUser) return PatchToDoListResponseDto.notExistUser();
+            if(!existedUser ) return PostStudyNoticeResponseDto.notExistUser();
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null) return PatchToDoListResponseDto.notExistStudy();
+            if( studyEntity == null) return PostStudyNoticeResponseDto.notExistStudy();
+
+            //  유저가 방생성 유저인지
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PostStudyNoticeResponseDto.noPermission();
+            
+            StudyTodolistEntity studyTodolistEntity = new StudyTodolistEntity(dto , studyNumber);
+            studyToDoListRespository.save(studyTodolistEntity);      
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PostStudyTodoListResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PatchStudyTodoListResponseDto> patchTodo(PatchStudyTodoListRequestDto dto,String createStudyUserEmail, Integer studyNumber, Integer studyListNumber) {
+        
+        try {
+
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser) return PatchStudyTodoListResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if (studyEntity == null) return PatchStudyTodoListResponseDto.notExistStudy();
 
             boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
-            if(!equalCreater) return PatchToDoListResponseDto.noPermission();
+            if(!equalCreater) return PatchStudyTodoListResponseDto.noPermission();
 
             StudyTodolistEntity studyTodolistEntity = studyToDoListRespository.findByStudyListNumber(studyListNumber);
-            if(studyTodolistEntity == null) return PatchToDoListResponseDto.notExistToDoList();
+            if(studyTodolistEntity == null) return PatchStudyTodoListResponseDto.notExistToDoList();
 
             studyTodolistEntity.patchTodoList(dto);
             studyToDoListRespository.save(studyTodolistEntity);            
@@ -415,25 +425,25 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return PatchToDoListResponseDto.success();
+        return PatchStudyTodoListResponseDto.success();
     }
 
     @Override
-    public ResponseEntity<? super DeleteToDoListResponseDto> deleteTodo(String createStudyUserEmail,Integer studyNumber, Integer studyListNumber) {
+    public ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodo(String createStudyUserEmail,Integer studyNumber, Integer studyListNumber) {
         
         try {
             boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
-            if(!existedUser) return  DeleteToDoListResponseDto.notExistUser();
+            if(!existedUser) return  DeleteStudyTodoListResponseDto.notExistUser();
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if (studyEntity == null) return DeleteToDoListResponseDto.notExistStudy();
+            if (studyEntity == null) return DeleteStudyTodoListResponseDto.notExistStudy();
             
 
             boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
-            if(!equalCreater) return DeleteToDoListResponseDto.noPermission();
+            if(!equalCreater) return DeleteStudyTodoListResponseDto.noPermission();
 
             StudyTodolistEntity studyTodolistEntity = studyToDoListRespository.findByStudyListNumber(studyListNumber);
-            if(studyTodolistEntity == null) return DeleteToDoListResponseDto.notExistToDoList();
+            if(studyTodolistEntity == null) return DeleteStudyTodoListResponseDto.notExistToDoList();
 
             studyToDoListRespository.delete(studyTodolistEntity);            
 
@@ -442,7 +452,7 @@ public class StudyServiceImplement implements StudyService {
             return ResponseDto.databaseError();
         }
 
-        return DeleteToDoListResponseDto.success();
+        return DeleteStudyTodoListResponseDto.success();
     }
 
     @Override
@@ -455,8 +465,10 @@ public class StudyServiceImplement implements StudyService {
             boolean existedUser = userRepository.existsByUserEmail(userEmail);
             if(!existedUser) return  GetStudyResponseDto.notExistUser();
 
+            boolean  existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+            if(!existedStudy) return  GetStudyResponseDto.notExistStudy();
+ 
             studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            // Integer studyNumber = studyEntity.getStudyNumber();
 
         } catch (Exception exception) {
             exception.printStackTrace();

@@ -13,23 +13,23 @@ import com.godlife.godlifeback.dto.response.study.GetTop5StudyListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetSearchWordStudyListResponseDto;
 import com.godlife.godlifeback.dto.response.study.GetSearchStudyListResponseDto;
 
-import com.godlife.godlifeback.dto.request.studyService.PostNoticeRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PatchNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyNoticeRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyNoticeRequestDto;
 
-import com.godlife.godlifeback.dto.response.studyService.GetNoticeListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.GetStudyNoticeListResponseDto;
 import com.godlife.godlifeback.dto.response.studyService.GetStudyResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PatchNoticeResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.DeleteNoticeResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PostNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PatchStudyNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.DeleteStudyNoticeResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.DeleteStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PostStudyNoticeResponseDto;
 
 
-import com.godlife.godlifeback.dto.request.studyService.PatchToDoListRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PostToDoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyTodoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyToDoListRequestDto;
 
-import com.godlife.godlifeback.dto.response.studyService.GetToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PostToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.PatchToDoListResponseDto;
-import com.godlife.godlifeback.dto.response.studyService.DeleteToDoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.GetStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PostStudyTodoListResponseDto;
+import com.godlife.godlifeback.dto.response.studyService.PatchStudyTodoListResponseDto;
 
 public interface StudyService {
 
@@ -51,17 +51,14 @@ public interface StudyService {
 
     ResponseEntity<? super GetStudyResponseDto> getStudy(String userEmail, Integer studyNumber);
 
-    ResponseEntity<? super GetNoticeListResponseDto> getNotice(String userEmail,Integer studyNumber);
-
-    ResponseEntity<? super PostNoticeResponseDto> postNotice(PostNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber);
-
-    ResponseEntity<? super PatchNoticeResponseDto> patchNotice(PatchNoticeRequestDto dto ,String createStudyUserEmail, Integer studyNumber,Integer studyNoticeNumber);    
-
-    ResponseEntity<? super DeleteNoticeResponseDto> deleteNotice(String createStudyUserEmail,Integer studyNumber,Integer studyNoticeNumber);       
+    ResponseEntity<? super GetStudyNoticeListResponseDto> getNotice(String userEmail,Integer studyNumber);
+    ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(PostStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber);
+    ResponseEntity<? super PatchStudyNoticeResponseDto> patchNotice(PatchStudyNoticeRequestDto dto ,String createStudyUserEmail, Integer studyNumber,Integer studyNoticeNumber);    
+    ResponseEntity<? super DeleteStudyNoticeResponseDto> deleteNotice(String createStudyUserEmail,Integer studyNumber,Integer studyNoticeNumber);       
 
     
-    ResponseEntity<? super GetToDoListResponseDto> getTodolist(String userEmail,Integer studyNumber);
-    ResponseEntity<? super PostToDoListResponseDto> postTodo(PostToDoListRequestDto dto,String createStudyUserEmail, Integer studyNumber);
-    ResponseEntity<? super PatchToDoListResponseDto> patchTodo(PatchToDoListRequestDto requestBody, String createStudyUserEmail,Integer studyNumber,Integer studyListNumber);
-    ResponseEntity<? super DeleteToDoListResponseDto> deleteTodo(String createStudyUserEmail,Integer studyNumber,Integer studyListNumber);
+    ResponseEntity<? super GetStudyTodoListResponseDto> getTodolist(String userEmail,Integer studyNumber);
+    ResponseEntity<? super PostStudyTodoListResponseDto> postTodo(PostStudyToDoListRequestDto dto,String createStudyUserEmail, Integer studyNumber);
+    ResponseEntity<? super PatchStudyTodoListResponseDto> patchTodo(PatchStudyTodoListRequestDto requestBody, String createStudyUserEmail,Integer studyNumber,Integer studyListNumber);
+    ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodo(String createStudyUserEmail,Integer studyNumber,Integer studyListNumber);
 }

@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.godlife.godlifeback.dto.request.studyService.PatchToDoListRequestDto;
-import com.godlife.godlifeback.dto.request.studyService.PostToDoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PatchStudyTodoListRequestDto;
+import com.godlife.godlifeback.dto.request.studyService.PostStudyToDoListRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,13 +31,13 @@ public class StudyTodolistEntity {
     private boolean studyListCheck;
     
     
-    public StudyTodolistEntity(PostToDoListRequestDto dto, Integer studyNumber){
+    public StudyTodolistEntity(PostStudyToDoListRequestDto dto, Integer studyNumber){
         this.studyNumber = studyNumber;
         this.studyListContent =  dto.getStudyListContent();
         this.studyListCheck = dto.getStudyListCheck();
     }
 
-    public void patchTodoList(PatchToDoListRequestDto dto){
+    public void patchTodoList(PatchStudyTodoListRequestDto dto){
         this.studyListContent =  dto.getStudyListContent();
         this.studyListCheck = dto.getStudyListCheck();
     }    

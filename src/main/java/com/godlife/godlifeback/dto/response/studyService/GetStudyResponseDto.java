@@ -50,7 +50,7 @@ public class GetStudyResponseDto extends ResponseDto{
 
     public static ResponseEntity<GetStudyResponseDto> success(StudyEntity studyEntity) {
         GetStudyResponseDto result = new GetStudyResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS,studyEntity);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }       
 
     public static ResponseEntity<ResponseDto> notExistUser() {

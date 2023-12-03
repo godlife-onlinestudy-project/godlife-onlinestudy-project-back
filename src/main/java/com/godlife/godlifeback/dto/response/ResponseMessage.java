@@ -21,9 +21,9 @@ public interface ResponseMessage {
     String NOT_EXIST_BOARD = "This board does not exist.";
     String NOT_EXIST_STUDY = "This study does not exist.";
     String NOT_EXIST_STUDY_MATERIAL = "This Study Material Number does not exist.";
-    String NOT_TODOLIST_EXISTS = "This study todolist does not exist.";
-    String NOT_NOTICE_EXISTS = "This notice does not exist.";
-    String NOT_MATERIAL_EXISTS = "This study material comment does not exist.";
+    String NOT_EXIST_TODOLIST = "This study todolist does not exist.";
+    String NOT_EXIST_NOTICE = "This notice does not exist.";
+    String NOT_EXIST_MATERIAL = "This study material comment does not exist.";
     String NO_PERMISSION = "Do not have permission.";
     String PASS_FAILED = "Confirm Password error.";
 

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PatchNoticeRequestDto {
+public class PostStudyNoticeRequestDto {
     @NotBlank @Size(min = 1)
     private String studyNoticeContent;    
 }
