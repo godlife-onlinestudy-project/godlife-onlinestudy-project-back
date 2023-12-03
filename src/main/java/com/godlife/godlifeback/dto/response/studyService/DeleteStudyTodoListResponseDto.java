@@ -7,22 +7,16 @@ import com.godlife.godlifeback.dto.response.ResponseCode;
 import com.godlife.godlifeback.dto.response.ResponseDto;
 import com.godlife.godlifeback.dto.response.ResponseMessage;
 
-public class PostNoticeResponseDto extends ResponseDto{
-
-
-    private PostNoticeResponseDto(String code, String message){
+public class DeleteStudyTodoListResponseDto extends ResponseDto{
+    
+    private DeleteStudyTodoListResponseDto(String code, String message){
         super(code, message);
     }
 
-    public static ResponseEntity<PostNoticeResponseDto> success(){
-        PostNoticeResponseDto  result = new PostNoticeResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    public static ResponseEntity<DeleteStudyTodoListResponseDto> success(){
+        DeleteStudyTodoListResponseDto result =  new DeleteStudyTodoListResponseDto(ResponseCode.SUCCESS,  ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
-    public static ResponseEntity<ResponseDto> notExistNotice(){
-        ResponseDto result = new ResponseDto(ResponseCode.NOT_NOTICE_EXISTS, ResponseMessage.NOT_NOTICE_EXISTS);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-    }    
 
     public static ResponseEntity<ResponseDto> notExistUser(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_USER, ResponseMessage.NOT_EXIST_USER);
@@ -37,5 +31,10 @@ public class PostNoticeResponseDto extends ResponseDto{
     public static ResponseEntity<ResponseDto> noPermission(){
         ResponseDto result = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    }
+
+    public static ResponseEntity<ResponseDto> notExistToDoList(){
+        ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_TODOLIST, ResponseMessage.NOT_EXIST_TODOLIST);
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);    
     }
 }

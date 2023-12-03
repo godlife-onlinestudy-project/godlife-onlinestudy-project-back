@@ -5,25 +5,27 @@ import org.springframework.http.ResponseEntity;
 
 import com.godlife.godlifeback.dto.response.ResponseCode;
 import com.godlife.godlifeback.dto.response.ResponseDto;
+
 import com.godlife.godlifeback.dto.response.ResponseMessage;
 
-public class DeleteToDoListResponseDto extends ResponseDto{
+public class PostStudyTodoListResponseDto extends ResponseDto{
     
-    private DeleteToDoListResponseDto(String code, String message){
+    private PostStudyTodoListResponseDto(String code, String message){
         super(code, message);
     }
 
-    public static ResponseEntity<DeleteToDoListResponseDto> success(){
-        DeleteToDoListResponseDto result =  new DeleteToDoListResponseDto(ResponseCode.SUCCESS,  ResponseMessage.SUCCESS);
+    public static ResponseEntity<PostStudyTodoListResponseDto> success(){
+        PostStudyTodoListResponseDto  result = new PostStudyTodoListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
-    public static ResponseEntity<ResponseDto> notExistUser(){
+    }      
+    
+    
+    public static ResponseEntity<ResponseDto> notExistsUser(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_USER, ResponseMessage.NOT_EXIST_USER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
     
-    public static ResponseEntity<ResponseDto> notExistStudy(){
+    public static ResponseEntity<ResponseDto> notExistsStudy(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_STUDY, ResponseMessage.NOT_EXIST_STUDY);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
@@ -33,8 +35,5 @@ public class DeleteToDoListResponseDto extends ResponseDto{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 
-    public static ResponseEntity<ResponseDto> notExistToDoList(){
-        ResponseDto result = new ResponseDto(ResponseCode.NOT_TODOLIST_EXISTS, ResponseMessage.NOT_TODOLIST_EXISTS);
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);    
-    }
+
 }

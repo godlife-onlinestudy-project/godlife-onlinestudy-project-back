@@ -7,24 +7,24 @@ import com.godlife.godlifeback.dto.response.ResponseCode;
 import com.godlife.godlifeback.dto.response.ResponseDto;
 import com.godlife.godlifeback.dto.response.ResponseMessage;
 
-public class PostToDoListResponseDto extends ResponseDto{
+
+public class PatchStudyTodoListResponseDto extends ResponseDto{
     
-    private PostToDoListResponseDto(String code, String message){
+    private PatchStudyTodoListResponseDto(String code, String message){
         super(code, message);
     }
 
-    public static ResponseEntity<PostToDoListResponseDto> success(){
-        PostToDoListResponseDto  result = new PostToDoListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    public static ResponseEntity<PatchStudyTodoListResponseDto> success(){
+        PatchStudyTodoListResponseDto  result = new PatchStudyTodoListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }      
-    
-    
-    public static ResponseEntity<ResponseDto> notExistsUser(){
+    }        
+
+    public static ResponseEntity<ResponseDto> notExistUser(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_USER, ResponseMessage.NOT_EXIST_USER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
     
-    public static ResponseEntity<ResponseDto> notExistsStudy(){
+    public static ResponseEntity<ResponseDto> notExistStudy(){
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_STUDY, ResponseMessage.NOT_EXIST_STUDY);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
@@ -34,8 +34,8 @@ public class PostToDoListResponseDto extends ResponseDto{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 
-    public static ResponseEntity<ResponseDto> notExistTodolist(){
-        ResponseDto result = new ResponseDto(ResponseCode.NOT_TODOLIST_EXISTS, ResponseMessage.NOT_TODOLIST_EXISTS);
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    public static ResponseEntity<ResponseDto> notExistToDoList(){
+        ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_TODOLIST, ResponseMessage.NOT_EXIST_TODOLIST);
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);    
     }
 }
