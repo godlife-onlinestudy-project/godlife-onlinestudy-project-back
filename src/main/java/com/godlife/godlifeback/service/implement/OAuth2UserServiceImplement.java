@@ -42,8 +42,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
           id = response.get("id");
           userNickname = response.get("nickname");
         }
-        if (registrationId.equals("naver")) {
-          
+
+        if (registrationId.equals("kakao")) {
+          Map<String, String> response = (Map<String, String>) oAuth2User.getAttribute("response");
+
+          id = response.get("id");
+          userNickname = response.get("nickname");
         }
 
         
