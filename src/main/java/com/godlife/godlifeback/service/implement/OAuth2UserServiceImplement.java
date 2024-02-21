@@ -44,10 +44,10 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         }
 
         if (registrationId.equals("kakao")) {
-          Map<String, String> response = (Map<String, String>) oAuth2User.getAttribute("response");
+          Map<String, Object> attributes = oAuth2User.getAttributes();
 
-          id = response.get("id");
-          userNickname = response.get("nickname");
+          id = String.valueOf(attributes.get("id"));
+          userNickname = ((Map<String, String>) attributes.get("properties")).get("nickname");
         }
 
         

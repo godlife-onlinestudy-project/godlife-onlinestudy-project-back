@@ -34,5 +34,5 @@ spring:
                         client-id: 27c00b69d2af490f7d98544ae6419081
                         client-authentication-method: POST
                         authorization-grant-type: authorization_code
-                        redirect-uri: "http://localhost:3000/oauth2/kakao/{registrationId}"
+                        redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
                         scope: profile_nickname, account_email
