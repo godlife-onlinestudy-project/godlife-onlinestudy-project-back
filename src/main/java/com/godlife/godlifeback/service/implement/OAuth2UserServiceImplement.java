@@ -50,7 +50,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
           userNickname = ((Map<String, String>) attributes.get("properties")).get("nickname");
         }
 
+        if (registrationId.equals("google")) {
+          Map<String, Object> attributes = oAuth2User.getAttributes();
         
+          id = String.valueOf(attributes.get("sub"));
+          userNickname = String.valueOf(attributes.get("name"));
+        }
 
         boolean existedId = userRepository.existsById(id);
         if (!existedId) {
