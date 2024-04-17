@@ -20,7 +20,7 @@
 
 ### 3. 역할 분담
 
-> - 박진우 : 로그인, 유저 마이페이지 + 이메일 코드 전송 기능
+> - 박진우 : 로그인, 유저 마이페이지, (Modal) 비밀번호 재설정 | 이메일 코드 전송 기능
 > - 김경훈 : 온라인스터디 운영 페이지, (Modal) 자료관리, 공지사항, 투두리스트 | 자료 및 이미지 공유 화면 기능
 > - 이수광 : 스터디 생성, (Modal) 방 생성, 일자 변경, 멤버 및 다음 스터디 관리 | 화상회의, OAuth2 기능
 > - 조창석 : 스터디 메인 페이지, 스터디 검색 (Modal) 스터디 참여 | 채팅 기능
@@ -37,7 +37,7 @@
 
 <br />
 
- # ⛏ ERD & AWS Structure
+ # ⛏ ERD & AWS Architecture
 
 <details>
   <summary>ERD</summary>
@@ -49,7 +49,7 @@
 <br />
 
 <details>
-  <summary>AWS Structure</summary>
+  <summary>AWS Architecture</summary>
   <div markdown="1" style="padding-left: 15px;">
     <img src = "https://github.com/godlife-onlinestudy-project/godlife-onlinestudy-project-back/assets/72859594/ceca2582-f7ff-4a2e-9a10-8531f2a64c7d" />
   </div>
