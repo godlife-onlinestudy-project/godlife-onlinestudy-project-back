@@ -29,9 +29,10 @@
 
 # 📚 기술 스택
 
-> ### Back-end
+### Back-end
 
 > JAVA
+> 
 > SpringBoot
 
 <br />
@@ -41,7 +42,7 @@
 <details>
   <summary>ERD</summary>
   <div markdown="1" style="padding-left: 15px;">
-    <img src = "" />
+    <img src = "https://github.com/godlife-onlinestudy-project/godlife-onlinestudy-project-back/assets/72859594/06681e1b-d30d-4951-a543-e5750b8ae0de" />
   </div>
 </details>
 
@@ -49,8 +50,8 @@
 
 <details>
   <summary>AWS Structure</summary>
-  <div markdown="1" style="padding-left: 15px;>
-    <img src = "" />
+  <div markdown="1" style="padding-left: 15px;">
+    <img src = "https://github.com/godlife-onlinestudy-project/godlife-onlinestudy-project-back/assets/72859594/ceca2582-f7ff-4a2e-9a10-8531f2a64c7d" />
   </div>
 </details>
 
