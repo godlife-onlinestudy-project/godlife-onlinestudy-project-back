@@ -3,9 +3,9 @@ server:
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1/godlife?serverTimezone=UTC&characterEncoding=UTF-8
-        username: root
-        password: 1234
+        url: jdbc:mysql://soogwang-mysql.cpqi0gk60m23.ap-northeast-2.rds.amazonaws.com/godlife?serverTimezone=UTC&characterEncoding=UTF-8
+        username: admin
+        password: P!ssw0rd
     security:
         oauth2:
             client:
