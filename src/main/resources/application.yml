@@ -25,7 +25,7 @@ spring:
                         client-id: KdXAxHFq5g2ginpsMAqY
                         client-secret: 53Xh1Q2t5P
                         authorization-grant-type: authorization_code
-                        redirect-uri: "http://ec2-43-202-24-102.ap-northeast-2.compute.amazonaws.com:4000/oauth2/callback/{registrationId}"
+                        redirect-uri: "https://api.godlife.co.kr/oauth2/callback/{registrationId}"
                         scope:
                         - email
                         - nickname
@@ -34,12 +34,12 @@ spring:
                         client-id: 27c00b69d2af490f7d98544ae6419081
                         client-authentication-method: POST
                         authorization-grant-type: authorization_code
-                        redirect-uri: "http://ec2-43-202-24-102.ap-northeast-2.compute.amazonaws.com:4000/oauth2/callback/{registrationId}"
+                        redirect-uri: "https://api.godlife.co.kr/oauth2/callback/{registrationId}"
                         scope: profile_nickname, account_email
                     google:
                         client-id: 1086638355618-ljquj432r6ubakahtg1bnammsbt8monp.apps.googleusercontent.com
                         client-secret: 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
-                        redirect-uri: "http://ec2-43-202-24-102.ap-northeast-2.compute.amazonaws.com:4000/oauth2/callback/{registrationId}"
+                        redirect-uri: "https://api.godlife.co.kr/oauth2/callback/{registrationId}"
                         scope:
                         - email
                         - profile

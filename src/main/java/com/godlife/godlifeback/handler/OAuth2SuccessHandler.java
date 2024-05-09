@@ -31,7 +31,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     String id = oAuth2User.getName();
     String token = jwtProvider.create(id);
 
-    response.sendRedirect("http://ec2-43-202-63-120.ap-northeast-2.compute.amazonaws.com:3000/oauth/"+token+"/"+18000);
+    response.sendRedirect("https://www.godlifestudy.co.kr/oauth/"+token+"/"+18000);
   }
 
 }
